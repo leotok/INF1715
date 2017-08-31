@@ -6,7 +6,7 @@ http://www.inf.puc-rio.br/~roberto/comp/lang.html
 ## Site
 http://www.inf.puc-rio.br/~roberto/comp/
 
-## Como usar
+## Como usar (MacOS)
 - Teste
 ```
 $ flex teste.lex
