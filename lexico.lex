@@ -33,6 +33,11 @@ SemInfo seminfo;
 "else"                                  { return TK_ELSE; }
 "while"                                 { return TK_WHILE; }
 "return"                                { return TK_RETURN; }
+"=="                                    { return TK_EQUAL; }
+"<="                                    { return TK_LESSEQUAL; }
+">="                                    { return TK_GREATEREQUAL; }
+"&&"                                    { return TK_AND; }
+"||"                                    { return TK_OR; }
 [a-zA-Z_][a-zA-Z0-9_]*                  { seminfo.s = copystring(yytext); return TK_ID; }
 [1-9][0-9]*|0[xX][0-9a-fA-F]+|o[0-7]*   { return TK_DEC; }
 .                                       { return yytext[0]; }
