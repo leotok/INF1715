@@ -1,4 +1,4 @@
-typedef enum 
+typedef enum
 {
     TK_INT = 1,
     TK_FLOAT,
@@ -11,7 +11,12 @@ typedef enum
     TK_AS,
     TK_RETURN,
     TK_DEC,
-    TK_ID
+    TK_ID,
+    TK_EQUAL,
+    TK_LESSEQUAL,
+    TK_GREATEREQUAL,
+    TK_AND,
+    TK_OR
 } token_enum;
 
 extern char *enum_to_text[] = {
