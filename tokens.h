@@ -26,7 +26,12 @@ extern char *enum_to_text[] = {
     "TK_AS",
     "TK_RETURN",
     "TK_DEC",
-    "TK_ID"
+    "TK_ID",
+    "TK_EQUAL",
+    "TK_LESSEQUAL",
+    "TK_GREATEREQUAL",
+    "TK_AND",
+    "TK_OR"
 };
 
 typedef union seminfo {
