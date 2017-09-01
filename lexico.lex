@@ -14,6 +14,14 @@ char * copystring(char *text) {
     return copy;
 }
 
+char* copyescapes(char *text) {
+    //TODO
+
+
+}
+
+
+
 SemInfo seminfo;
 
 %}
@@ -21,6 +29,7 @@ SemInfo seminfo;
 
 %%
 
+#[^\n]+                                 {}
 "\n"                                    {}
 " "                                     {}
 "as"                                    { return TK_AS; }
@@ -39,6 +48,7 @@ SemInfo seminfo;
 "&&"                                    { return TK_AND; }
 "||"                                    { return TK_OR; }
 [a-zA-Z_][a-zA-Z0-9_]*                  { seminfo.s = copystring(yytext); return TK_ID; }
+\"(([\\][\"])|([^\"\n])+)*\"            { seminfo.s = copystring(yytext); return TK_STRING; }
 [1-9][0-9]*|0[xX][0-9a-fA-F]+|o[0-7]*   { return TK_DEC; }
 .                                       { return yytext[0]; }
 
@@ -64,5 +74,5 @@ int main() {
         print_tk_info(tk);
         tk = yylex();
     }
-       
+
 }

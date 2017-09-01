@@ -16,7 +16,8 @@ typedef enum
     TK_LESSEQUAL,
     TK_GREATEREQUAL,
     TK_AND,
-    TK_OR
+    TK_OR,
+    TK_STRING
 } token_enum;
 
 extern char *enum_to_text[] = {
@@ -36,7 +37,8 @@ extern char *enum_to_text[] = {
     "TK_LESSEQUAL",
     "TK_GREATEREQUAL",
     "TK_AND",
-    "TK_OR"
+    "TK_OR",
+    "TK_STRING"
 };
 
 typedef union seminfo {
