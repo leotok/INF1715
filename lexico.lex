@@ -29,7 +29,7 @@ SemInfo seminfo;
 
 %%
 
-#[^\n]+                                 {}
+#[^\n]*                                 {}
 "\n"                                    {}
 " "                                     {}
 "as"                                    { return TK_AS; }
@@ -42,6 +42,20 @@ SemInfo seminfo;
 "else"                                  { return TK_ELSE; }
 "while"                                 { return TK_WHILE; }
 "return"                                { return TK_RETURN; }
+"="		                                  { return '='; }
+"!"		                                  { return '!'; }
+"("		                                  { return '('; }
+")"		                                  { return ')'; }
+"{"		                                  { return '{'; }
+"}"		                                  { return '}'; }
+"["		                                  { return '['; }
+"]"		                                  { return ']'; }
+"+"		                                  { return '+'; }
+"-"		                                  { return '-'; }
+","		                                  { return ','; }
+"@"                                     { return '@'; }
+"*"		                                  { return '*'; }
+"/"		                                  { return '/'; }
 "=="                                    { return TK_EQUAL; }
 "<="                                    { return TK_LESSEQUAL; }
 ">="                                    { return TK_GREATEREQUAL; }
