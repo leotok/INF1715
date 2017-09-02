@@ -68,7 +68,7 @@ SemInfo seminfo;
 
 [1-9][0-9]*                             { seminfo.i = atoi(yytext); return TK_DEC; }
 0[xX][0-9a-fA-F]+|o[0-7]*               { seminfo.i = strtol(yytext,NULL,0); return TK_DEC; }
-[0-9]"."[0-9]+([Ee][-+]?[0-9]+)?       { seminfo.f = strtof(yytext,NULL); return TK_FLOAT;}
+[0-9]+"."[0-9]+([Ee][-+]?[0-9]+)?       { seminfo.f = strtof(yytext,NULL); return TK_FLOAT;}
 
 
 .                                       { return yytext[0]; }
