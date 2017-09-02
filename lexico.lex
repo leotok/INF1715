@@ -1,3 +1,6 @@
+%option noinput
+%option nounput
+%option noyywrap
 %{
 #include "tokens.h"
 #include "string.h"
@@ -61,18 +64,26 @@ SemInfo seminfo;
 "||"                                    { return TK_OR; }
 [a-zA-Z_][a-zA-Z0-9_]*                  { seminfo.s = copystring(yytext); return TK_ID; }
 \"(([\\][\"])|([^\"\n])+)*\"            { seminfo.s = copystring(yytext); return TK_STRING; }
+
+
 [1-9][0-9]*                             { seminfo.i = atoi(yytext); return TK_DEC; }
 0[xX][0-9a-fA-F]+|o[0-7]*               { seminfo.i = strtol(yytext,NULL,0); return TK_DEC; }
+[0-9]"."[0-9]+([Ee][-+]?[0-9]+)?       { seminfo.f = strtof(yytext,NULL); return TK_FLOAT;}
+
+
 .                                       { return yytext[0]; }
 
 %%
 
-
+/*
 void print_tk_info(token_enum tk) {
     switch (tk)
     {
         case TK_DEC:
             printf("%d %s %s %d\n", tk, enum_to_text[tk - 1], yytext, seminfo.i);
+            break;
+        case TK_FLOAT:
+            printf("%d %s %s %f\n", tk, enum_to_text[tk - 1], yytext, seminfo.f);
             break;
         default:
             printf("%d %s %s\n", tk, enum_to_text[tk - 1], yytext);
@@ -89,3 +100,4 @@ int main() {
     }
 
 }
+*/
