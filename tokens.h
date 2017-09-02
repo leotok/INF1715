@@ -2,7 +2,7 @@
 
 typedef enum
 {
-    TK_INT = CHAR_MAX,
+    TK_INT = CHAR_MAX+1,
     TK_FLOAT,
     TK_CHAR,
     TK_VOID,
