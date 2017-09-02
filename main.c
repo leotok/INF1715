@@ -27,22 +27,29 @@ int main (void) {
   int token = 1;
   token = yylex();
   while (token) {
-    switch (token)
-    {
+
+    if (token < CHAR_MAX){
+      printf("%c\n",token);
+    }
+    else {
+      switch (token)
+      {
         case TK_DEC:
-            printf("%s %d\n",enum_to_text[token-1], seminfo.i);
+            printf("%s %d\n",enum_to_text[token-CHAR_MAX], seminfo.i);
             break;
         case TK_FLOAT:
-            printf("%s %f\n",enum_to_text[token-1], seminfo.f);
+            printf("%s %f\n",enum_to_text[token-CHAR_MAX], seminfo.f);
             break;
         case TK_STRING:
-            printf("%s %s\n",enum_to_text[token-1], seminfo.s);
+            printf("%s %s\n",enum_to_text[token-CHAR_MAX], seminfo.s);
             break;
         default:
-            printf("%s\n",enum_to_text[token-1]);
+            printf("%s\n",enum_to_text[token-CHAR_MAX]);
             break;
     }
-    token = yylex();
   }
+  token = yylex();
+}
+
   return 0;
 }

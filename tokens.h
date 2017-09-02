@@ -1,6 +1,8 @@
+#include <limits.h>
+
 typedef enum
 {
-    TK_INT = 1,
+    TK_INT = CHAR_MAX,
     TK_FLOAT,
     TK_CHAR,
     TK_VOID,
