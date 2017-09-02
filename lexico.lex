@@ -5,22 +5,68 @@
 #include "tokens.h"
 #include "string.h"
 
-char * copystring(char *text) {
-    int length = strlen(text);
+static char* createstring(int length) {
 
-    char *copy = (char *) malloc(length + 1);
-    if (copy == NULL) {
-        printf("Falha ao alocar memória.");
-        exit(1);
-    }
+  char *str = (char *) malloc(length);
+  if (str == NULL) {
+      printf("Falha ao alocar memória.");
+      exit(1);
+  }
+  return str;
+}
+
+static char * copystring(char *text) {
+
+    int length = strlen(text);
+    char *copy = createstring(length+1);
     strcpy(copy, text);
     return copy;
 }
 
-char* copyescapes(char *text) {
-    //TODO
+static char* copyescapes(char *text) {
 
-    return NULL;
+    int length = strlen(text);
+    char *copy = createstring(length);
+    int i,j, flag = 0;
+    for (j = 0, i = 1; i < length - 1; i++) {
+
+      if (flag) {
+          switch(text[i]) {
+            case '\\':
+              copy[j] = '\\';
+              j++;
+              break;
+            case 'n':
+              copy[j] = '\n';
+              j++;
+              break;
+            case 't':
+              copy[j] = '\t';
+              j++;
+              break;
+            case '\"':
+              copy[j] = '\"';
+              j++;
+              break;
+            default:
+              printf("Escape Invalido");
+              exit(1);
+          }
+        flag = 0;
+      }
+      else {
+        if(text[i] == '\\') {
+          flag = 1;
+        }
+        else {
+          copy[j] = text[i];
+          j++;
+        }
+      }
+
+    }
+    copy[j] = '\0';
+    return copy;
 }
 
 SemInfo seminfo;
@@ -63,12 +109,15 @@ SemInfo seminfo;
 "&&"                                    { return TK_AND; }
 "||"                                    { return TK_OR; }
 [a-zA-Z_][a-zA-Z0-9_]*                  { seminfo.s = copystring(yytext); return TK_ID; }
-\"(([\\][\"])|([^\"\n])+)*\"            { seminfo.s = copystring(yytext); return TK_STRING; }
+\"(\\.|[^\\"])*\"                       { seminfo.s = copyescapes(yytext); return TK_STRING; }
 
 
 [1-9][0-9]*                             { seminfo.i = atoi(yytext); return TK_DEC; }
 0[xX][0-9a-fA-F]+|o[0-7]*               { seminfo.i = strtol(yytext,NULL,0); return TK_DEC; }
-[0-9]+"."[0-9]+([Ee][-+]?[0-9]+)?       { seminfo.f = strtof(yytext,NULL); return TK_FLOAT;}
+
+[0-9]+[Ee][+-]?[0-9]+(f|F)?		          { seminfo.f = strtof(yytext,NULL); return TK_FLOAT;}
+[0-9]*"."[0-9]+([Ee][+-]?[0-9]+)?(f|F)?	{ seminfo.f = strtof(yytext,NULL); return TK_FLOAT;}
+[0-9]+"."[0-9]*([Ee][+-]?[0-9]+)?(f|F)? { seminfo.f = strtof(yytext,NULL); return TK_FLOAT;}
 
 
 .                                       { return yytext[0]; }
