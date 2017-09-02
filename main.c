@@ -41,7 +41,10 @@ int main (void) {
             printf("%s %f\n",enum_to_text[token-CHAR_MAX-1], seminfo.f);
             break;
         case TK_STRING:
-            printf("%s %s\n",enum_to_text[token-CHAR_MAX]-1, seminfo.s);
+            printf("%s %s\n",enum_to_text[token-CHAR_MAX-1], seminfo.s);
+            break;
+        case TK_ID:
+            printf("%s %s\n",enum_to_text[token-CHAR_MAX-1], seminfo.s);
             break;
         default:
             printf("%s\n",enum_to_text[token-CHAR_MAX-1]);
