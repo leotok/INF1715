@@ -330,8 +330,6 @@ void yyfree (void *  );
 
 #define YY_AT_BOL() (YY_CURRENT_BUFFER_LVALUE->yy_at_bol)
 
-/* Begin user sect3 */
-
 #define yywrap(n) 1
 #define YY_SKIP_YYWRAP
 
@@ -597,7 +595,7 @@ static char* copyescapes(char *text) {
 
 SemInfo seminfo;
 
-#line 601 "lex.yy.c"
+#line 599 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -780,7 +778,7 @@ YY_DECL
 #line 77 "lexico.lex"
 
 
-#line 784 "lex.yy.c"
+#line 782 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -931,76 +929,76 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 93 "lexico.lex"
+#line 92 "lexico.lex"
 { return TK_EQUAL; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 94 "lexico.lex"
+#line 93 "lexico.lex"
 { return TK_LESSEQUAL; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 95 "lexico.lex"
+#line 94 "lexico.lex"
 { return TK_GREATEREQUAL; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 96 "lexico.lex"
+#line 95 "lexico.lex"
 { return TK_AND; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 97 "lexico.lex"
+#line 96 "lexico.lex"
 { return TK_OR; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 98 "lexico.lex"
+#line 97 "lexico.lex"
 { seminfo.s = copystring(yytext); return TK_ID; }
 	YY_BREAK
 case 20:
 /* rule 20 can match eol */
 YY_RULE_SETUP
-#line 99 "lexico.lex"
+#line 98 "lexico.lex"
 { seminfo.s = copyescapes(yytext); return TK_STRING; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 102 "lexico.lex"
+#line 101 "lexico.lex"
 { seminfo.i = atoi(yytext); return TK_DEC; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 103 "lexico.lex"
+#line 102 "lexico.lex"
 { seminfo.i = strtol(yytext,NULL,0); return TK_DEC; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 105 "lexico.lex"
+#line 104 "lexico.lex"
 { seminfo.f = strtof(yytext,NULL); return TK_FLOAT;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 106 "lexico.lex"
+#line 105 "lexico.lex"
 { seminfo.f = strtof(yytext,NULL); return TK_FLOAT;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 107 "lexico.lex"
+#line 106 "lexico.lex"
 { seminfo.f = strtof(yytext,NULL); return TK_FLOAT;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 110 "lexico.lex"
+#line 109 "lexico.lex"
 { return yytext[0]; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 112 "lexico.lex"
+#line 110 "lexico.lex"
 ECHO;
 	YY_BREAK
-#line 1004 "lex.yy.c"
+#line 1002 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1960,34 +1958,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 112 "lexico.lex"
-
-
-
-/*
-void print_tk_info(token_enum tk) {
-    switch (tk)
-    {
-        case TK_DEC:
-            printf("%d %s %s %d\n", tk, enum_to_text[tk - 1], yytext, seminfo.i);
-            break;
-        case TK_FLOAT:
-            printf("%d %s %s %f\n", tk, enum_to_text[tk - 1], yytext, seminfo.f);
-            break;
-        default:
-            printf("%d %s %s\n", tk, enum_to_text[tk - 1], yytext);
-    }
-}
-
-int main() {
-    token_enum tk = yylex();
-
-    while (tk != 0)
-    {
-        print_tk_info(tk);
-        tk = yylex();
-    }
-
-}
-*/
-
+#line 110 "lexico.lex"

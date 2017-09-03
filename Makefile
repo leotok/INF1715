@@ -4,7 +4,7 @@ main: main.c lex.yy.c
 	cc -Wall -std=c99 -o main main.c lex.yy.c
 
 testelex:
-	sh testelex.sh
+	python test.py
 
 clean:
 		rm a.out

@@ -107,32 +107,3 @@ SemInfo seminfo;
 
 
 .                                       { return yytext[0]; }
-
-%%
-
-/*
-void print_tk_info(token_enum tk) {
-    switch (tk)
-    {
-        case TK_DEC:
-            printf("%d %s %s %d\n", tk, enum_to_text[tk - 1], yytext, seminfo.i);
-            break;
-        case TK_FLOAT:
-            printf("%d %s %s %f\n", tk, enum_to_text[tk - 1], yytext, seminfo.f);
-            break;
-        default:
-            printf("%d %s %s\n", tk, enum_to_text[tk - 1], yytext);
-    }
-}
-
-int main() {
-    token_enum tk = yylex();
-
-    while (tk != 0)
-    {
-        print_tk_info(tk);
-        tk = yylex();
-    }
-
-}
-*/
