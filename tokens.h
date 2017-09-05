@@ -13,6 +13,7 @@ typedef enum
     TK_AS,
     TK_RETURN,
     TK_DEC,
+    TK_REAL,
     TK_ID,
     TK_EQUAL,
     TK_LESSEQUAL,

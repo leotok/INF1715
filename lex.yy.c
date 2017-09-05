@@ -965,37 +965,37 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 101 "lexico.lex"
+#line 100 "lexico.lex"
 { seminfo.i = atoi(yytext); return TK_DEC; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 102 "lexico.lex"
+#line 101 "lexico.lex"
 { seminfo.i = strtol(yytext,NULL,0); return TK_DEC; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 104 "lexico.lex"
-{ seminfo.f = strtof(yytext,NULL); return TK_FLOAT;}
+#line 103 "lexico.lex"
+{ seminfo.f = strtof(yytext,NULL); return TK_REAL;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 105 "lexico.lex"
-{ seminfo.f = strtof(yytext,NULL); return TK_FLOAT;}
+#line 104 "lexico.lex"
+{ seminfo.f = strtof(yytext,NULL); return TK_REAL;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 106 "lexico.lex"
-{ seminfo.f = strtof(yytext,NULL); return TK_FLOAT;}
+#line 105 "lexico.lex"
+{ seminfo.f = strtof(yytext,NULL); return TK_REAL;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 109 "lexico.lex"
+#line 107 "lexico.lex"
 { return yytext[0]; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 110 "lexico.lex"
+#line 108 "lexico.lex"
 ECHO;
 	YY_BREAK
 #line 1002 "lex.yy.c"
@@ -1958,4 +1958,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 110 "lexico.lex"
+#line 108 "lexico.lex"

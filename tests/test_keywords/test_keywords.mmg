@@ -1,4 +1,14 @@
-int float while
-float
-int variavel
-new
+y: int = 100;
+i: int = 0;
+
+main (): int
+{
+    while (y > i)
+    {
+        z: float = i + y as float;
+        a: char = 'A';
+        char str[] = "string \\ \n\t string";
+
+        v: int = new int {i};
+    }    
+}
