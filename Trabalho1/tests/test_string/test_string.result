@@ -1,0 +1,7 @@
+Line 1	TK_STRING Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
+Line 2	TK_STRING """"
+Line 3	TK_STRING .	.	
+Line 4	TK_STRING \\
+Line 5	TK_STRING a	a
+b	b
+Line 6	TK_STRING { } = ! ( ) { } [ ] + - , @ * / == <= >= && ||as char int float void if  else new     return      while 

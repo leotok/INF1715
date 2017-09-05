@@ -1,0 +1,21 @@
+Line 1	TK_AS
+Line 2	TK_CHAR
+Line 3	TK_INT
+Line 4	TK_FLOAT
+Line 5	TK_VOID
+Line 6	TK_IF
+Line 7	TK_ELSE
+Line 8	TK_NEW
+Line 9	TK_RETURN
+Line 10	TK_WHILE
+Line 12	TK_ID variavel
+Line 13	TK_ID asvar
+Line 14	TK_ID charvar
+Line 15	TK_ID intvar
+Line 16	TK_ID floatvar
+Line 17	TK_ID voidvar
+Line 18	TK_ID ifvar
+Line 19	TK_ID elsevar
+Line 20	TK_ID newvar
+Line 21	TK_ID returnvar
+Line 22	TK_ID whilevar

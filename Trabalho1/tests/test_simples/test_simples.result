@@ -1,0 +1,66 @@
+Line 1	TK_ID y
+Line 1	:
+Line 1	TK_INT
+Line 1	=
+Line 1	TK_DEC 100
+Line 1	;
+Line 2	TK_ID i
+Line 2	:
+Line 2	TK_INT
+Line 2	=
+Line 2	TK_DEC 0
+Line 2	;
+Line 5	TK_ID main
+Line 5	(
+Line 5	)
+Line 5	:
+Line 5	TK_INT
+Line 6	{
+Line 7	TK_WHILE
+Line 7	(
+Line 7	TK_ID y
+Line 7	>
+Line 7	TK_ID i
+Line 7	)
+Line 8	{
+Line 9	TK_ID z
+Line 9	:
+Line 9	TK_FLOAT
+Line 9	=
+Line 9	TK_ID i
+Line 9	+
+Line 9	TK_ID y
+Line 9	TK_AS
+Line 9	TK_FLOAT
+Line 9	;
+Line 10	TK_ID a
+Line 10	:
+Line 10	TK_CHAR
+Line 10	=
+Line 10	'
+Line 10	TK_ID A
+Line 10	'
+Line 10	;
+Line 11	TK_CHAR
+Line 11	TK_ID str
+Line 11	[
+Line 11	]
+Line 11	=
+Line 11	TK_STRING string \ 
+	 string
+Line 11	;
+Line 13	TK_ID v
+Line 13	:
+Line 13	TK_INT
+Line 13	=
+Line 13	TK_NEW
+Line 13	TK_INT
+Line 13	{
+Line 13	TK_ID i
+Line 13	}
+Line 13	;
+Line 14	}
+Line 15	TK_RETURN
+Line 15	TK_DEC 0
+Line 15	;
+Line 16	}

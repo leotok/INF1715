@@ -1,0 +1,11 @@
+Line 1	TK_ID main
+Line 1	(
+Line 1	TK_VOID
+Line 1	)
+Line 1	:
+Line 1	TK_INT
+Line 2	{
+Line 3	TK_RETURN
+Line 3	TK_DEC 0
+Line 3	;
+Line 4	}

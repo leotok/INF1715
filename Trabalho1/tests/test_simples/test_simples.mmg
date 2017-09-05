@@ -1,6 +1,7 @@
 y: int = 100;
 i: int = 0;
 
+# main
 main (): int
 {
     while (y > i)
@@ -10,5 +11,6 @@ main (): int
         char str[] = "string \\ \n\t string";
 
         v: int = new int {i};
-    }    
+    }
+    return 0;
 }

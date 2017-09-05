@@ -28,7 +28,8 @@ int main (void) {
   int token = 1;
   token = yylex();
   while (token) {
-
+    printf("Line %d\t", yy_lines);
+    
     if (token <= CHAR_MAX){
       printf("%c\n",token);
     }
