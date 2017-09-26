@@ -1,9 +1,7 @@
-%option noinput
-%option nounput
-%option noyywrap
 %{
-#include "tokens.h"
-#include "string.h"
+#include <stdio.h>
+#include "y.tab.h"
+extern int yylex (void);
 
 static char* createstring(int length) {
 
@@ -69,16 +67,12 @@ static char* copyescapes(char *text) {
     return copy;
 }
 
-SemInfo seminfo;
-int yy_lines = 1;
-
 %}
-
 
 %%
 
 #[^\n]*                                 {}
-"\n"                                    { yy_lines++; }
+"\n"                                    {}
 " "                                     {}
 "as"                                    { return TK_AS; }
 "int"                                   { return TK_INT; }
@@ -95,14 +89,14 @@ int yy_lines = 1;
 ">="                                    { return TK_GREATEREQUAL; }
 "&&"                                    { return TK_AND; }
 "||"                                    { return TK_OR; }
-[a-zA-Z_][a-zA-Z0-9_]*                  { seminfo.s = copystring(yytext); return TK_ID; }
-\"(\\.|[^\\"])*\"                       { seminfo.s = copyescapes(yytext); return TK_STRING; }
+[a-zA-Z_][a-zA-Z0-9_]*                  { yylval.s = copystring(yytext); return TK_ID; }
+\"(\\.|[^\\"])*\"                       { yylval.s = copyescapes(yytext); return TK_STRING; }
 
-([1-9][0-9]*)|0                         { seminfo.i = atoi(yytext); return TK_DEC; }
-0[xX][0-9a-fA-F]+|o[0-7]*               { seminfo.i = strtol(yytext,NULL,0); return TK_DEC; }
+([1-9][0-9]*)|0                         { yylval.i = atoi(yytext); return TK_DEC; }
+0[xX][0-9a-fA-F]+|o[0-7]*               { yylval.i = strtol(yytext,NULL,0); return TK_DEC; }
 
-[0-9]+[Ee][+-]?[0-9]+(f|F)?		          { seminfo.f = strtof(yytext,NULL); return TK_REAL;}
-[0-9]*"."[0-9]+([Ee][+-]?[0-9]+)?(f|F)?	{ seminfo.f = strtof(yytext,NULL); return TK_REAL;}
-[0-9]+"."[0-9]*([Ee][+-]?[0-9]+)?(f|F)? { seminfo.f = strtof(yytext,NULL); return TK_REAL;}
+[0-9]+[Ee][+-]?[0-9]+(f|F)?		          { yylval.f = strtof(yytext,NULL); return TK_REAL;}
+[0-9]*"."[0-9]+([Ee][+-]?[0-9]+)?(f|F)?	{ yylval.f = strtof(yytext,NULL); return TK_REAL;}
+[0-9]+"."[0-9]*([Ee][+-]?[0-9]+)?(f|F)? { yylval.f = strtof(yytext,NULL); return TK_REAL;}
 
 .                                       { return yytext[0]; }
