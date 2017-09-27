@@ -143,6 +143,7 @@ expVar: expVar '[' expressao ']'                                    {;}
       | TK_ID                                                       {;}
       | TK_DEC                                                      {;}
       | TK_REAL                                                     {;}
+      | '(' expressao ')'                                           {;}
       | chamada                                                     {;};
 
 %%
