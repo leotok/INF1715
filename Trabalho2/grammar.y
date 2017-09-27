@@ -83,11 +83,11 @@ comando:                TK_IF  expressao  bloco                     {;}
                    |    bloco                                       {;};
 
 
-cmd_return:             TK_RETURN expressao ';'                     {;}
+cmd_return:             TK_RETURN expLogica ';'                     {;}
                    |    TK_RETURN ';'                               {;};
 
 variavel:               TK_ID                                       {;}
-                   |    expressao '[' expressao ']'                 {;};
+                   |    expVar '[' expressao ']'                 {;};
 
 chamada:                TK_ID '(' expressoes ')'                    {;};
 
