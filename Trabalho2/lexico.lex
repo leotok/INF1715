@@ -67,12 +67,14 @@ static char* copyescapes(char *text) {
     return copy;
 }
 
+int yy_lines = 1;
+
 %}
 
 %%
 
 #[^\n]*                                 {}
-"\n"                                    {}
+"\n"                                    {yy_lines++;}
 " "                                     {}
 "as"                                    { return TK_AS; }
 "int"                                   { return TK_INT; }
@@ -85,6 +87,7 @@ static char* copyescapes(char *text) {
 "while"                                 { return TK_WHILE; }
 "return"                                { return TK_RETURN; }
 "=="                                    { return TK_EQUAL; }
+"˜="                                    { return TK_NOTEQUAL; }
 "<="                                    { return TK_LESSEQUAL; }
 ">="                                    { return TK_GREATEREQUAL; }
 "&&"                                    { return TK_AND; }

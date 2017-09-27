@@ -28,6 +28,7 @@ int yywrap();
 %token	TK_REAL
 %token	TK_ID
 %token	TK_EQUAL
+%token  TK_NOTEQUAL
 %token	TK_LESSEQUAL
 %token	TK_GREATEREQUAL
 %token	TK_AND
@@ -39,15 +40,19 @@ int yywrap();
 programa:              lista_definicoes                             {;};
 
 lista_definicoes:      definicao                                    {;}
-                   |   lista_definicoes definicao                   {;};
+                   |   definicao lista_definicoes                   {;};
 
 definicao:             def_variavel                                 {;}
                    |   def_funcao                                   {;};
 
+<<<<<<< HEAD
 def_variavel:          TK_ID ':' tipo ';'                              {;};
+=======
+def_variavel:          TK_ID ':' tipo ';'                           {;};
+>>>>>>> f6b3e2a94ba636000043b46b202a4c75792ce29c
 
-lista_def_var:         lista_def_var def_variavel                   {;}
-                   |                                                {;};
+lista_def_var:         def_variavel lista_def_var                   {;}
+                   |   /* vazio*/                                   {;};
 
 tipo:                  tipo_primitivo                               {;}
                    |   tipo '[' ']'                                 {;};
@@ -60,17 +65,17 @@ tipo_primitivo:         TK_INT                                      {;}
 def_funcao:             TK_ID '(' parametros ')' ':' tipo bloco     {;};
 
 parametros:             lista_params                                {;}
-                   |                                                {;};
+                   |    /* vazio*/                                  {;};
 
 lista_params:           parametro                                   {;}
-                   |    lista_params ',' parametro                  {;};
+                   |    parametro ',' parametros                    {;};
 
 parametro:              TK_ID ':' tipo                              {;};
 
-bloco:                  '{' lista_def_var  '}'                      {;};
+bloco:                  '{' lista_def_var lista_comandos '}'                     {;};
 
 lista_comandos:         lista_comandos comando                      {;}
-                   |                                                {;};
+                   |    /*vazio*/                                            {;};
 
 comando:                TK_IF  expressao  bloco                     {;}
                    |    TK_IF  expressao  bloco  TK_ELSE  bloco     {;}
@@ -83,7 +88,7 @@ comando:                TK_IF  expressao  bloco                     {;}
 
 
 cmd_return:             TK_RETURN expressao ';'                     {;}
-                   |    TK_RETURN                                   {;};
+                   |    TK_RETURN ';'                               {;};
 
 variavel:               TK_ID                                       {;}
                    |    expressao '[' expressao ']'                 {;};
@@ -94,9 +99,55 @@ expressoes:             lista_exp                                   {;}
                    |                                                {;};
 
 lista_exp:              expressao                                   {;}
-                   |    lista_exp ',' expressao                     {;};
+                   |    expressao ',' lista_exp                     {;};
 
-expressao: TK_DEC {;};
+expressao: expNew{;}
+          | expAs {;};
+
+expAs: expressao TK_AS tipo {;};
+
+expNew: TK_NEW tipo '[' expressao ']' {;}
+        | expLogica {;};
+
+expLogica: expLogica TK_AND expCmp
+          | expOr;
+
+expOr: expLogica TK_OR expCmp {;}
+        | expCmp  {;};
+
+opCmp: TK_EQUAL
+        | TK_NOTEQUAL {;}
+        | TK_LESSEQUAL {;}
+        |	TK_GREATEREQUAL {;}
+        | '<' {;}
+        | '>'  {;};
+
+expCmp: expCmp opCmp expAdd {;}
+        | expAdd {;};
+
+addOp: '+' {;}
+      | '-' {;};
+
+expAdd: expAdd addOp expMult {;}
+        | expMult {;};
+
+multOp: '*' {;}
+      | '/' {;};
+
+expMult: expMult multOp expUnaria {;}
+        | expUnaria {;};
+
+opUnario: '!'  {;}
+          | '-' {;};
+
+expUnaria: expUnaria opUnario expVar {;}
+          | expVar {;};
+
+expVar: expVar '[' expressao ']' {;}
+      | TK_ID {;}
+      | TK_DEC {;}
+      | TK_REAL {;}
+      | chamada {;};
 
 %%
 
