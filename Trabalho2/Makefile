@@ -1,8 +1,13 @@
-testsyntax:
+main:
 	lex lexico.lex
 	yacc -d grammar.y
 	cc lex.yy.c y.tab.c -o out
-	cat teste1 | ./out
+
+testsyntax:
+	python test.py unittest
+
+saveresult:
+	python test.py saveresults
 
 clean:
 	rm out
