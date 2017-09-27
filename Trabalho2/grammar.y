@@ -48,7 +48,7 @@ definicao:             def_variavel                                 {;}
 def_variavel:          TK_ID ':' tipo ';'                           {;};
 
 lista_def_var:         def_variavel lista_def_var                   {;}
-                   |                                                {;};
+                   |   /* vazio*/                                   {;};
 
 tipo:                  tipo_primitivo                               {;}
                    |   tipo '[' ']'                                 {;};
@@ -61,17 +61,17 @@ tipo_primitivo:         TK_INT                                      {;}
 def_funcao:             TK_ID '(' parametros ')' ':' tipo bloco     {;};
 
 parametros:             lista_params                                {;}
-                   |                                                {;};
+                   |    /* vazio*/                                  {;};
 
 lista_params:           parametro                                   {;}
                    |    parametro ',' parametros                    {;};
 
 parametro:              TK_ID ':' tipo                              {;};
 
-bloco:                  '{' lista_def_var lista_comandos '}'        {;};
+bloco:                  '{' lista_def_var lista_comandos '}'                     {;};
 
 lista_comandos:         lista_comandos comando                      {;}
-                   |                                                {;};
+                   |    /*vazio*/                                            {;};
 
 comando:                TK_IF  expressao  bloco                     {;}
                    |    TK_IF  expressao  bloco  TK_ELSE  bloco     {;}
@@ -97,59 +97,60 @@ expressoes:             lista_exp                                   {;}
 lista_exp:              expressao                                   {;}
                    |    expressao ',' lista_exp                     {;};
 
-expressao: expNew                                                   {;}
-          | expAs                                                   {;};
+expressao: expNew{;}
+          | expAs {;};
 
-expAs: expressao TK_AS tipo                                         {;};
+expAs: expressao TK_AS tipo {;};
 
-expNew: TK_NEW tipo '[' expressao ']'                               {;}
+expNew: TK_NEW tipo '[' expressao ']' {;}
         | expLogica {;};
 
-expLogica: expLogica TK_AND expCmp                                  {;}
-          | expOr                                                   {;};
+expLogica: expLogica TK_AND expCmp
+          | expOr;
 
-expOr: expLogica TK_OR expCmp                                       {;}
-        | expCmp                                                    {;};
+expOr: expLogica TK_OR expCmp {;}
+        | expCmp  {;};
 
 opCmp: TK_EQUAL
-        | TK_NOTEQUAL                                               {;}
-        | TK_LESSEQUAL                                              {;}
-        |	TK_GREATEREQUAL                                           {;}
-        | '<'                                                       {;}
-        | '>'                                                       {;};
+        | TK_NOTEQUAL {;}
+        | TK_LESSEQUAL {;}
+        |	TK_GREATEREQUAL {;}
+        | '<' {;}
+        | '>'  {;};
 
-expCmp: expCmp opCmp expAdd                                         {;}
-        | expAdd                                                    {;};
+expCmp: expCmp opCmp expAdd {;}
+        | expAdd {;};
 
-addOp: '+'                                                          {;}
-      | '-'                                                         {;};
+addOp: '+' {;}
+      | '-' {;};
 
-expAdd: expAdd addOp expMult                                        {;}
-        | expMult                                                   {;};
+expAdd: expAdd addOp expMult {;}
+        | expMult {;};
 
-multOp: '*'                                                         {;}
-      | '/'                                                         {;};
+multOp: '*' {;}
+      | '/' {;};
 
-expMult: expMult multOp expUnaria                                   {;}
-        | expUnaria                                                 {;};
+expMult: expMult multOp expUnaria {;}
+        | expUnaria {;};
 
-opUnario: '!'                                                       {;}
-          | '-'                                                     {;};
+opUnario: '!'  {;}
+          | '-' {;};
 
-expUnaria: expUnaria opUnario expVar                                {;}
-          | expVar                                                  {;};
+expUnaria: expUnaria opUnario expVar {;}
+          | expVar {;};
 
-expVar: expVar '[' expressao ']'                                    {;}
-      | TK_ID                                                       {;}
-      | TK_DEC                                                      {;}
-      | TK_REAL                                                     {;}
-      | '(' expressao ')'                                           {;}
-      | chamada                                                     {;};
+expVar: expVar '[' expressao ']' {;}
+      | TK_ID {;}
+      | TK_DEC {;}
+      | TK_REAL {;}
+      | TK_STRING {;}
+      | '(' expressao ')' {;}
+      | chamada {;};
 
 %%
 
 void yyerror(const char *str) {
-  printf("error: %s\n",str);
+  fprintf(stderr,"error: %s\n",str);
 }
 
 int yywrap() {
