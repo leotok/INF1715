@@ -6,8 +6,14 @@ http://www.inf.puc-rio.br/~roberto/comp/lang.html
 ## Site
 http://www.inf.puc-rio.br/~roberto/comp/
 
-## Analisador léxico para linguagem Monga
+## Analisador léxico
 ```
 $ make
 $ make testelex
+```
+
+## Analisador sintático
+```
+$ make
+$ make testsyntax
 ```
