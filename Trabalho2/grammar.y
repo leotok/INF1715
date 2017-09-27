@@ -47,7 +47,7 @@ definicao:             def_variavel                                 {;}
 
 def_variavel:          TK_ID ':' tipo ';'                           {;};
 
-lista_def_var:         lista_def_var def_variavel                    {;}
+lista_def_var:         lista_def_var def_variavel                   {;}
                    |   /* vazio*/                                   {;};
 
 tipo:                  tipo_primitivo                               {;}
@@ -68,26 +68,25 @@ lista_params:           parametro                                   {;}
 
 parametro:              TK_ID ':' tipo                              {;};
 
-bloco:                  '{' lista_def_var lista_comandos '}'                     {;};
+bloco:                  '{' lista_def_var lista_comandos '}'        {;};
 
 lista_comandos:         lista_comandos comando                      {;}
-                   |    /*vazio*/                                            {;};
+                   |    /*vazio*/                                   {;};
 
 comando:                bloco
-                   |    expLogica ';'                               {;}
-                   |    '@' expLogica ';'                           {;}
+                   |    expressao ';'                               {;}
+                   |    '@' expressao ';'                           {;}
                    |    cmd_return                                  {;}
-                   |    variavel '=' expLogica ';'                  {;}
+                   |    variavel '=' expressao ';'                  {;}
                    |    TK_IF  expLogica  bloco                     {;}
                    |    TK_IF  expLogica  bloco  TK_ELSE  bloco     {;}
                    |    TK_WHILE    expLogica    bloco              {;};
 
 
-cmd_return:             TK_RETURN expLogica ';'                     {;}
-                   |    TK_RETURN ';'                               {;};
+cmd_return:             TK_RETURN expressao ';'                     {;};
 
 variavel:               TK_ID                                       {;}
-                   |    expressao_base '[' expLogica ']'                 {;};
+                   |    expressao_base '[' expLogica ']'            {;};
 
 chamada:                TK_ID '(' expressoes ')'                    {;};
 
@@ -97,55 +96,53 @@ expressoes:             lista_exp                                   {;}
 lista_exp:              expLogica                                   {;}
                    |    expLogica ',' lista_exp                     {;};
 
-expressao_base:          TK_DEC  {;}
-                     |   TK_REAL {;}
-                     |   TK_STRING {;}
-                     |   variavel   {;}
-                     |   '(' expLogica ')'  {;}
-                     |   chamada        {;}
-                     |   TK_NEW tipo '[' expLogica ']' {;};
+expressao_base:          TK_DEC                                     {;}
+                     |   TK_REAL                                    {;}
+                     |   TK_STRING                                  {;}
+                     |   variavel                                   {;}
+                     |   '(' expLogica ')'                          {;}
+                     |   chamada                                    {;};
+                     
+expressao: expNew                                                   {;}
+          | expAs                                                   {;};
+
+expAs: expLogica TK_AS tipo                                         {;};
+
+expNew: TK_NEW tipo '[' expLogica ']'                               {;}
+        | expLogica                                                 {;};
+
+expLogica:      expLogica TK_OR expAnd                              {;}
+                | expAnd                                            {;};
+
+expAnd:         expCmp                                              {;}
+                | expAnd TK_AND expCmp                              {;};
+
+opCmp:   TK_EQUAL                                                   {;}
+        | TK_NOTEQUAL                                               {;}
+        | TK_LESSEQUAL                                              {;}
+        |	TK_GREATEREQUAL                                     {;}
+        | '<'                                                       {;}
+        | '>'                                                       {;};
+
+expCmp: expCmp opCmp expAdd                                         {;}
+        | expAdd                                                    {;};
+
+addOp: '+'                                                          {;}
+      | '-'                                                         {;};
+
+expAdd: expAdd addOp expMult                                        {;}
+        | expMult                                                   {;};
+
+multOp: '*'                                                         {;}
+      | '/'                                                         {;};
+
+expMult: expMult multOp expUnaria                                   {;}
+        | expUnaria                                                 {;};
 
 
-expressao: expNew {;}
-          | expAs {;};
-
-expAs: expressao TK_AS tipo {;};
-
-expNew: TK_NEW tipo '[' expressao ']' {;}
-        | expLogica {;};
-
-expLogica:      expLogica TK_OR expAnd {;}
-                | expAnd {;};
-
-expAnd:         expCmp  {;}
-                | expAnd TK_AND expCmp {;};
-
-opCmp:   TK_EQUAL        {;}
-        | TK_NOTEQUAL {;}
-        | TK_LESSEQUAL {;}
-        |	TK_GREATEREQUAL {;}
-        | '<' {;}
-        | '>'  {;};
-
-expCmp: expCmp opCmp expAdd {;}
-        | expAdd {;};
-
-addOp: '+' {;}
-      | '-' {;};
-
-expAdd: expAdd addOp expMult {;}
-        | expMult {;};
-
-multOp: '*' {;}
-      | '/' {;};
-
-expMult: expMult multOp expUnaria {;}
-        | expUnaria {;};
-
-
-expUnaria:              expressao_base {;}
-                | '-'   expressao_base {;}
-                | '!'   expressao_base    {;};
+expUnaria:              expressao_base                              {;}
+                | '-'   expressao_base                              {;}
+                | '!'   expressao_base                              {;};
 
 
 
