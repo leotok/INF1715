@@ -73,9 +73,9 @@ bloco:                  '{' lista_def_var lista_comandos '}'                    
 lista_comandos:         lista_comandos comando                      {;}
                    |    /*vazio*/                                            {;};
 
-comando:                TK_IF  expressao  bloco                     {;}
-                   |    TK_IF  expressao  bloco  TK_ELSE  bloco     {;}
-                   |    TK_WHILE    expressao    bloco              {;}
+comando:                TK_IF  expLogica  bloco                     {;}
+                   |    TK_IF  expLogica  bloco  TK_ELSE  bloco     {;}
+                   |    TK_WHILE    expLogica    bloco              {;}
                    |    variavel '=' expressao ';'                  {;}
                    |    cmd_return                                  {;}
                    |    chamada ';'                                 {;}
@@ -83,7 +83,7 @@ comando:                TK_IF  expressao  bloco                     {;}
                    |    bloco                                       {;};
 
 
-cmd_return:             TK_RETURN expLogica ';'                     {;}
+cmd_return:             TK_RETURN expressao ';'                     {;}
                    |    TK_RETURN ';'                               {;};
 
 variavel:               TK_ID                                       {;}
@@ -150,7 +150,7 @@ expVar: expVar '[' expressao ']' {;}
 %%
 
 void yyerror(const char *str) {
-  fprintf(stderr,"error: %s\n",str);
+  printf("error: %s\n",str);
 }
 
 int yywrap() {
