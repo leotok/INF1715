@@ -44,7 +44,7 @@ lista_definicoes:      definicao                                    {;}
 definicao:             def_variavel                                 {;}
                    |   def_funcao                                   {;};
 
-def_variavel:          TK_ID ':' tipo                               {;};
+def_variavel:          TK_ID ':' tipo ';'                              {;};
 
 lista_def_var:         lista_def_var def_variavel                   {;}
                    |                                                {;};
@@ -101,7 +101,7 @@ expressao: TK_DEC {;};
 %%
 
 void yyerror(const char *str) {
-  fprintf(stderr,"error: %s\n",str);
+  printf("error: %s\n",str);
 }
 
 int yywrap() {
