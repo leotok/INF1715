@@ -1,7 +1,7 @@
 funcao(): void {
-    x: int;
-    y: int;
+    
+    print(as);
 
-    x = 1;
+    return 1;
     
 }

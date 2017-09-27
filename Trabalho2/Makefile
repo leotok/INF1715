@@ -1,6 +1,6 @@
 main:
 	lex lexico.lex
-	yacc -d grammar.y
+	yacc -d -v grammar.y
 	cc lex.yy.c y.tab.c -o out
 
 testsyntax:
