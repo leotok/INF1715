@@ -1,0 +1,3 @@
+funcao(x: int, y: float, c: char): void {
+    
+}
