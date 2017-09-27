@@ -1,0 +1,7 @@
+funcao(): void {
+    x: int;
+    y: int;
+
+    x = 1;
+    
+}
