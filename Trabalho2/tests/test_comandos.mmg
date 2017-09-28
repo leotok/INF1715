@@ -1,5 +1,4 @@
 funcao(): void {
-    
-    asd;
-    
+  x : int;
+  x = 1;
 }

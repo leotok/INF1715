@@ -70,14 +70,14 @@ parametro:              TK_ID ':' tipo                              {;};
 
 bloco:                  '{' lista_def_var lista_comandos '}'        {;};
 
-lista_comandos:         lista_comandos comando                      {;}
+lista_comandos:         comando lista_comandos                      {;}
                    |    /*vazio*/                                   {;};
 
 comando:                bloco
                    |    expressao ';'                               {;}
                    |    '@' expressao ';'                           {;}
                    |    cmd_return                                  {;}
-                   |    variavel '=' expressao ';'                  {;}
+                   |    variavel '=' expLogica ';'                  {;}
                    |    TK_IF  expLogica  bloco                     {;}
                    |    TK_IF  expLogica  bloco  TK_ELSE  bloco     {;}
                    |    TK_WHILE    expLogica    bloco              {;};
@@ -102,7 +102,7 @@ expressao_base:          TK_DEC                                     {;}
                      |   variavel                                   {;}
                      |   '(' expLogica ')'                          {;}
                      |   chamada                                    {;};
-                     
+
 expressao: expNew                                                   {;}
           | expAs                                                   {;};
 
