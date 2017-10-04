@@ -78,8 +78,9 @@ bloco:              '{' lista_def_var lista_comandos '}'
                     ;
 
 lista_def_var:         /*vazio*/
-                  |    def_variavel lista_def_var
+                  |    lista_def_var def_variavel
                   ;
+
 
 lista_comandos:         /*vazio*/
                    |    comando lista_comandos
