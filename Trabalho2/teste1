@@ -1,8 +1,0 @@
-bla : int;
-
-main (x : int, f : float, z : char) : void {
-
-if 5+ x() {}
-else{}
-x=1;
-}
