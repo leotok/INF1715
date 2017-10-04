@@ -37,47 +37,54 @@ int yywrap();
 
 %%
 
-programa:              lista_definicoes                             ;
+programa:               lista_definicoes
+                      ;
 
-lista_definicoes:      definicao
-                   |   definicao lista_definicoes                   ;
+lista_definicoes:       definicao
+                   |    definicao lista_definicoes
+                   ;
 
-definicao:             def_variavel
-                   |   def_funcao                                   ;
+definicao:              def_variavel
+                   |    def_funcao
+                   ;
 
-def_variavel:       TK_ID ':' tipo ';'
-                    ;
-
-lista_def_var:         /* vazio*/
-                  |    def_variavel lista_def_var
-                  ;
-
-tipo:                  tipo_primitivo
-                   |   tipo '[' ']'                                 ;
+def_variavel:           TK_ID ':' tipo ';'
+                   ;
+tipo:                   tipo_primitivo
+                   |    tipo '[' ']'
+                   ;
 
 tipo_primitivo:         TK_INT
                    |    TK_FLOAT
                    |    TK_CHAR
-                   |    TK_VOID                                     ;
+                   |    TK_VOID
+                   ;
 
-def_funcao:             TK_ID '(' parametros ')' ':' tipo bloco     ;
+def_funcao:             TK_ID '(' parametros ')' ':' tipo bloco
+                   ;
 
 parametros:             lista_params
-                   |    /* vazio*/                                  ;
+                   |    /* vazio*/
+                   ;
 
 lista_params:           parametro
-                   |    parametro ',' parametros                    ;
-
-parametro:              TK_ID ':' tipo                              ;
-
-bloco:                  '{' lista_def_var lista_comandos '}'        ;
-
-lista_comandos:     lista_comandos2;
-                   |    /*vazio*/                                   ;
-
-lista_comandos2:   comando lista_comandos
-                  |
+                   |    parametro ',' lista_params
                    ;
+
+parametro:          TK_ID ':' tipo
+                    ;
+
+bloco:              '{' lista_def_var lista_comandos '}'
+                    ;
+
+lista_def_var:         /*vazio*/
+                  |    def_variavel lista_def_var
+                  ;
+
+lista_comandos:         /*vazio*/
+                   |    comando lista_comandos
+                   ;
+
 
 comando:                bloco
                    |    '@' expressao ';'
@@ -86,28 +93,38 @@ comando:                bloco
                    |    variavel '=' expressao ';'
                    |    TK_IF  expressao  bloco
                    |    TK_IF  expressao  bloco  TK_ELSE  bloco
-                   |    TK_WHILE    expressao    bloco              ;
+                   |    TK_WHILE    expressao    bloco
+                   |    chamada ';'
+                   ;
 
 variavel:               TK_ID
-                   |    variavel '[' expressao ']'            ;
+                   |    expressao_base '[' expressao ']'
+                   ;
 
-chamada:                TK_ID '(' expressoes ')'                    ;
+chamada:                TK_ID '(' expressoes ')'
+                   ;
 
 expressoes:             lista_exp
                    |     /* vazio*/                                 ;
 
 lista_exp:              expressao
-                   |    expressao ',' lista_exp                     ;
+                   |    expressao ',' lista_exp
+                   ;
 
+expressao:              expAs
+                   ;
 
-expressao: expOr
-          ;
+expAs :                 expressao TK_AS tipo
+                  |     expOr
+                  ;
 
-expOr:      expOr TK_OR expAnd
-                | expAnd                                            ;
+expOr:                  expOr TK_OR expAnd
+                  |     expAnd
+                  ;
 
-expAnd:         expCmp
-                | expAnd TK_AND expCmp                              ;
+expAnd:                 expCmp
+                  |     expAnd TK_AND expCmp
+                  ;
 
 expCmp:   expCmp TK_EQUAL expAdd
         | expCmp TK_NOTEQUAL expAdd
@@ -136,7 +153,6 @@ expressao_base:     TK_DEC
                 |   variavel
                 |   '(' expressao ')'
                 |   chamada
-                |   expressao TK_AS tipo
                 |   TK_NEW tipo '[' expressao ']'
                 ;
 

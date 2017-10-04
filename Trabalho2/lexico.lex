@@ -1,6 +1,6 @@
 %{
 #include <stdio.h>
-#include "y.tab.h"
+#include "grammar.tab.h"
 extern int yylex (void);
 
 static char* createstring(int length) {

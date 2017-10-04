@@ -1,0 +1,1727 @@
+State 31 conflicts: 1 shift/reduce
+State 34 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: programa $end
+
+    1 programa: lista_definicoes
+
+    2 lista_definicoes: definicao
+    3                 | definicao lista_definicoes
+
+    4 definicao: def_variavel
+    5          | def_funcao
+
+    6 def_variavel: TK_ID ':' tipo ';'
+
+    7 tipo: tipo_primitivo
+    8     | tipo '[' ']'
+
+    9 tipo_primitivo: TK_INT
+   10               | TK_FLOAT
+   11               | TK_CHAR
+   12               | TK_VOID
+
+   13 def_funcao: TK_ID '(' parametros ')' ':' tipo bloco
+
+   14 parametros: lista_params
+   15           | %empty
+
+   16 lista_params: parametro
+   17             | parametro ',' lista_params
+
+   18 parametro: TK_ID ':' tipo
+
+   19 bloco: '{' lista_def_var lista_comandos '}'
+
+   20 lista_def_var: %empty
+   21              | def_variavel lista_def_var
+
+   22 lista_comandos: %empty
+   23               | comando lista_comandos
+
+   24 comando: bloco
+   25        | '@' expressao ';'
+   26        | TK_RETURN expressao ';'
+   27        | TK_RETURN ';'
+   28        | variavel '=' expressao ';'
+   29        | TK_IF expressao bloco
+   30        | TK_IF expressao bloco TK_ELSE bloco
+   31        | TK_WHILE expressao bloco
+   32        | chamada ';'
+
+   33 variavel: TK_ID
+   34         | expressao_base '[' expressao ']'
+
+   35 chamada: TK_ID '(' expressoes ')'
+
+   36 expressoes: lista_exp
+   37           | %empty
+
+   38 lista_exp: expressao
+   39          | expressao ',' lista_exp
+
+   40 expressao: expAs
+
+   41 expAs: expressao TK_AS tipo
+   42      | expOr
+
+   43 expOr: expOr TK_OR expAnd
+   44      | expAnd
+
+   45 expAnd: expCmp
+   46       | expAnd TK_AND expCmp
+
+   47 expCmp: expCmp TK_EQUAL expAdd
+   48       | expCmp TK_NOTEQUAL expAdd
+   49       | expCmp TK_LESSEQUAL expAdd
+   50       | expCmp TK_GREATEREQUAL expAdd
+   51       | expCmp '<' expAdd
+   52       | expCmp '>' expAdd
+   53       | expAdd
+
+   54 expAdd: expAdd '+' expMult
+   55       | expAdd '-' expMult
+   56       | expMult
+
+   57 expMult: expMult '*' expUnaria
+   58        | expMult '/' expUnaria
+   59        | expUnaria
+
+   60 expUnaria: expressao_base
+   61          | '-' expressao_base
+   62          | '!' expressao_base
+
+   63 expressao_base: TK_DEC
+   64               | TK_REAL
+   65               | TK_STRING
+   66               | variavel
+   67               | '(' expressao ')'
+   68               | chamada
+   69               | TK_NEW tipo '[' expressao ']'
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'!' (33) 62
+'(' (40) 13 35 67
+')' (41) 13 35 67
+'*' (42) 57
+'+' (43) 54
+',' (44) 17 39
+'-' (45) 55 61
+'/' (47) 58
+':' (58) 6 13 18
+';' (59) 6 25 26 27 28 32
+'<' (60) 51
+'=' (61) 28
+'>' (62) 52
+'@' (64) 25
+'[' (91) 8 34 69
+']' (93) 8 34 69
+'{' (123) 19
+'}' (125) 19
+error (256)
+TK_INT (258) 9
+TK_FLOAT (259) 10
+TK_CHAR (260) 11
+TK_VOID (261) 12
+TK_NEW (262) 69
+TK_IF (263) 29 30
+TK_ELSE (264) 30
+TK_WHILE (265) 31
+TK_AS (266) 41
+TK_RETURN (267) 26 27
+TK_DEC (268) 63
+TK_REAL (269) 64
+TK_ID (270) 6 13 18 33 35
+TK_EQUAL (271) 47
+TK_NOTEQUAL (272) 48
+TK_LESSEQUAL (273) 49
+TK_GREATEREQUAL (274) 50
+TK_AND (275) 46
+TK_OR (276) 43
+TK_STRING (277) 65
+
+
+Nonterminals, with rules where they appear
+
+$accept (41)
+    on left: 0
+programa (42)
+    on left: 1, on right: 0
+lista_definicoes (43)
+    on left: 2 3, on right: 1 3
+definicao (44)
+    on left: 4 5, on right: 2 3
+def_variavel (45)
+    on left: 6, on right: 4 21
+tipo (46)
+    on left: 7 8, on right: 6 8 13 18 41 69
+tipo_primitivo (47)
+    on left: 9 10 11 12, on right: 7
+def_funcao (48)
+    on left: 13, on right: 5
+parametros (49)
+    on left: 14 15, on right: 13
+lista_params (50)
+    on left: 16 17, on right: 14 17
+parametro (51)
+    on left: 18, on right: 16 17
+bloco (52)
+    on left: 19, on right: 13 24 29 30 31
+lista_def_var (53)
+    on left: 20 21, on right: 19 21
+lista_comandos (54)
+    on left: 22 23, on right: 19 23
+comando (55)
+    on left: 24 25 26 27 28 29 30 31 32, on right: 23
+variavel (56)
+    on left: 33 34, on right: 28 66
+chamada (57)
+    on left: 35, on right: 32 68
+expressoes (58)
+    on left: 36 37, on right: 35
+lista_exp (59)
+    on left: 38 39, on right: 36 39
+expressao (60)
+    on left: 40, on right: 25 26 28 29 30 31 34 38 39 41 67 69
+expAs (61)
+    on left: 41 42, on right: 40
+expOr (62)
+    on left: 43 44, on right: 42 43
+expAnd (63)
+    on left: 45 46, on right: 43 44 46
+expCmp (64)
+    on left: 47 48 49 50 51 52 53, on right: 45 46 47 48 49 50 51 52
+expAdd (65)
+    on left: 54 55 56, on right: 47 48 49 50 51 52 53 54 55
+expMult (66)
+    on left: 57 58 59, on right: 54 55 56 57 58
+expUnaria (67)
+    on left: 60 61 62, on right: 57 58 59
+expressao_base (68)
+    on left: 63 64 65 66 67 68 69, on right: 34 60 61 62
+
+
+State 0
+
+    0 $accept: . programa $end
+
+    TK_ID  shift, and go to state 1
+
+    programa          go to state 2
+    lista_definicoes  go to state 3
+    definicao         go to state 4
+    def_variavel      go to state 5
+    def_funcao        go to state 6
+
+
+State 1
+
+    6 def_variavel: TK_ID . ':' tipo ';'
+   13 def_funcao: TK_ID . '(' parametros ')' ':' tipo bloco
+
+    ':'  shift, and go to state 7
+    '('  shift, and go to state 8
+
+
+State 2
+
+    0 $accept: programa . $end
+
+    $end  shift, and go to state 9
+
+
+State 3
+
+    1 programa: lista_definicoes .
+
+    $default  reduce using rule 1 (programa)
+
+
+State 4
+
+    2 lista_definicoes: definicao .
+    3                 | definicao . lista_definicoes
+
+    TK_ID  shift, and go to state 1
+
+    $default  reduce using rule 2 (lista_definicoes)
+
+    lista_definicoes  go to state 10
+    definicao         go to state 4
+    def_variavel      go to state 5
+    def_funcao        go to state 6
+
+
+State 5
+
+    4 definicao: def_variavel .
+
+    $default  reduce using rule 4 (definicao)
+
+
+State 6
+
+    5 definicao: def_funcao .
+
+    $default  reduce using rule 5 (definicao)
+
+
+State 7
+
+    6 def_variavel: TK_ID ':' . tipo ';'
+
+    TK_INT    shift, and go to state 11
+    TK_FLOAT  shift, and go to state 12
+    TK_CHAR   shift, and go to state 13
+    TK_VOID   shift, and go to state 14
+
+    tipo            go to state 15
+    tipo_primitivo  go to state 16
+
+
+State 8
+
+   13 def_funcao: TK_ID '(' . parametros ')' ':' tipo bloco
+
+    TK_ID  shift, and go to state 17
+
+    $default  reduce using rule 15 (parametros)
+
+    parametros    go to state 18
+    lista_params  go to state 19
+    parametro     go to state 20
+
+
+State 9
+
+    0 $accept: programa $end .
+
+    $default  accept
+
+
+State 10
+
+    3 lista_definicoes: definicao lista_definicoes .
+
+    $default  reduce using rule 3 (lista_definicoes)
+
+
+State 11
+
+    9 tipo_primitivo: TK_INT .
+
+    $default  reduce using rule 9 (tipo_primitivo)
+
+
+State 12
+
+   10 tipo_primitivo: TK_FLOAT .
+
+    $default  reduce using rule 10 (tipo_primitivo)
+
+
+State 13
+
+   11 tipo_primitivo: TK_CHAR .
+
+    $default  reduce using rule 11 (tipo_primitivo)
+
+
+State 14
+
+   12 tipo_primitivo: TK_VOID .
+
+    $default  reduce using rule 12 (tipo_primitivo)
+
+
+State 15
+
+    6 def_variavel: TK_ID ':' tipo . ';'
+    8 tipo: tipo . '[' ']'
+
+    ';'  shift, and go to state 21
+    '['  shift, and go to state 22
+
+
+State 16
+
+    7 tipo: tipo_primitivo .
+
+    $default  reduce using rule 7 (tipo)
+
+
+State 17
+
+   18 parametro: TK_ID . ':' tipo
+
+    ':'  shift, and go to state 23
+
+
+State 18
+
+   13 def_funcao: TK_ID '(' parametros . ')' ':' tipo bloco
+
+    ')'  shift, and go to state 24
+
+
+State 19
+
+   14 parametros: lista_params .
+
+    $default  reduce using rule 14 (parametros)
+
+
+State 20
+
+   16 lista_params: parametro .
+   17             | parametro . ',' lista_params
+
+    ','  shift, and go to state 25
+
+    $default  reduce using rule 16 (lista_params)
+
+
+State 21
+
+    6 def_variavel: TK_ID ':' tipo ';' .
+
+    $default  reduce using rule 6 (def_variavel)
+
+
+State 22
+
+    8 tipo: tipo '[' . ']'
+
+    ']'  shift, and go to state 26
+
+
+State 23
+
+   18 parametro: TK_ID ':' . tipo
+
+    TK_INT    shift, and go to state 11
+    TK_FLOAT  shift, and go to state 12
+    TK_CHAR   shift, and go to state 13
+    TK_VOID   shift, and go to state 14
+
+    tipo            go to state 27
+    tipo_primitivo  go to state 16
+
+
+State 24
+
+   13 def_funcao: TK_ID '(' parametros ')' . ':' tipo bloco
+
+    ':'  shift, and go to state 28
+
+
+State 25
+
+   17 lista_params: parametro ',' . lista_params
+
+    TK_ID  shift, and go to state 17
+
+    lista_params  go to state 29
+    parametro     go to state 20
+
+
+State 26
+
+    8 tipo: tipo '[' ']' .
+
+    $default  reduce using rule 8 (tipo)
+
+
+State 27
+
+    8 tipo: tipo . '[' ']'
+   18 parametro: TK_ID ':' tipo .
+
+    '['  shift, and go to state 22
+
+    $default  reduce using rule 18 (parametro)
+
+
+State 28
+
+   13 def_funcao: TK_ID '(' parametros ')' ':' . tipo bloco
+
+    TK_INT    shift, and go to state 11
+    TK_FLOAT  shift, and go to state 12
+    TK_CHAR   shift, and go to state 13
+    TK_VOID   shift, and go to state 14
+
+    tipo            go to state 30
+    tipo_primitivo  go to state 16
+
+
+State 29
+
+   17 lista_params: parametro ',' lista_params .
+
+    $default  reduce using rule 17 (lista_params)
+
+
+State 30
+
+    8 tipo: tipo . '[' ']'
+   13 def_funcao: TK_ID '(' parametros ')' ':' tipo . bloco
+
+    '['  shift, and go to state 22
+    '{'  shift, and go to state 31
+
+    bloco  go to state 32
+
+
+State 31
+
+   19 bloco: '{' . lista_def_var lista_comandos '}'
+
+    TK_ID  shift, and go to state 33
+
+    TK_ID     [reduce using rule 20 (lista_def_var)]
+    $default  reduce using rule 20 (lista_def_var)
+
+    def_variavel   go to state 34
+    lista_def_var  go to state 35
+
+
+State 32
+
+   13 def_funcao: TK_ID '(' parametros ')' ':' tipo bloco .
+
+    $default  reduce using rule 13 (def_funcao)
+
+
+State 33
+
+    6 def_variavel: TK_ID . ':' tipo ';'
+
+    ':'  shift, and go to state 7
+
+
+State 34
+
+   21 lista_def_var: def_variavel . lista_def_var
+
+    TK_ID  shift, and go to state 33
+
+    TK_ID     [reduce using rule 20 (lista_def_var)]
+    $default  reduce using rule 20 (lista_def_var)
+
+    def_variavel   go to state 34
+    lista_def_var  go to state 36
+
+
+State 35
+
+   19 bloco: '{' lista_def_var . lista_comandos '}'
+
+    TK_NEW     shift, and go to state 37
+    TK_IF      shift, and go to state 38
+    TK_WHILE   shift, and go to state 39
+    TK_RETURN  shift, and go to state 40
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '{'        shift, and go to state 31
+    '@'        shift, and go to state 46
+
+    $default  reduce using rule 22 (lista_comandos)
+
+    bloco           go to state 47
+    lista_comandos  go to state 48
+    comando         go to state 49
+    variavel        go to state 50
+    chamada         go to state 51
+    expressao_base  go to state 52
+
+
+State 36
+
+   21 lista_def_var: def_variavel lista_def_var .
+
+    $default  reduce using rule 21 (lista_def_var)
+
+
+State 37
+
+   69 expressao_base: TK_NEW . tipo '[' expressao ']'
+
+    TK_INT    shift, and go to state 11
+    TK_FLOAT  shift, and go to state 12
+    TK_CHAR   shift, and go to state 13
+    TK_VOID   shift, and go to state 14
+
+    tipo            go to state 53
+    tipo_primitivo  go to state 16
+
+
+State 38
+
+   29 comando: TK_IF . expressao bloco
+   30        | TK_IF . expressao bloco TK_ELSE bloco
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expressao       go to state 58
+    expAs           go to state 59
+    expOr           go to state 60
+    expAnd          go to state 61
+    expCmp          go to state 62
+    expAdd          go to state 63
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 39
+
+   31 comando: TK_WHILE . expressao bloco
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expressao       go to state 67
+    expAs           go to state 59
+    expOr           go to state 60
+    expAnd          go to state 61
+    expCmp          go to state 62
+    expAdd          go to state 63
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 40
+
+   26 comando: TK_RETURN . expressao ';'
+   27        | TK_RETURN . ';'
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    ';'        shift, and go to state 68
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expressao       go to state 69
+    expAs           go to state 59
+    expOr           go to state 60
+    expAnd          go to state 61
+    expCmp          go to state 62
+    expAdd          go to state 63
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 41
+
+   63 expressao_base: TK_DEC .
+
+    $default  reduce using rule 63 (expressao_base)
+
+
+State 42
+
+   64 expressao_base: TK_REAL .
+
+    $default  reduce using rule 64 (expressao_base)
+
+
+State 43
+
+   33 variavel: TK_ID .
+   35 chamada: TK_ID . '(' expressoes ')'
+
+    '('  shift, and go to state 70
+
+    $default  reduce using rule 33 (variavel)
+
+
+State 44
+
+   65 expressao_base: TK_STRING .
+
+    $default  reduce using rule 65 (expressao_base)
+
+
+State 45
+
+   67 expressao_base: '(' . expressao ')'
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expressao       go to state 71
+    expAs           go to state 59
+    expOr           go to state 60
+    expAnd          go to state 61
+    expCmp          go to state 62
+    expAdd          go to state 63
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 46
+
+   25 comando: '@' . expressao ';'
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expressao       go to state 72
+    expAs           go to state 59
+    expOr           go to state 60
+    expAnd          go to state 61
+    expCmp          go to state 62
+    expAdd          go to state 63
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 47
+
+   24 comando: bloco .
+
+    $default  reduce using rule 24 (comando)
+
+
+State 48
+
+   19 bloco: '{' lista_def_var lista_comandos . '}'
+
+    '}'  shift, and go to state 73
+
+
+State 49
+
+   23 lista_comandos: comando . lista_comandos
+
+    TK_NEW     shift, and go to state 37
+    TK_IF      shift, and go to state 38
+    TK_WHILE   shift, and go to state 39
+    TK_RETURN  shift, and go to state 40
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '{'        shift, and go to state 31
+    '@'        shift, and go to state 46
+
+    $default  reduce using rule 22 (lista_comandos)
+
+    bloco           go to state 47
+    lista_comandos  go to state 74
+    comando         go to state 49
+    variavel        go to state 50
+    chamada         go to state 51
+    expressao_base  go to state 52
+
+
+State 50
+
+   28 comando: variavel . '=' expressao ';'
+   66 expressao_base: variavel .
+
+    '='  shift, and go to state 75
+
+    $default  reduce using rule 66 (expressao_base)
+
+
+State 51
+
+   32 comando: chamada . ';'
+   68 expressao_base: chamada .
+
+    ';'  shift, and go to state 76
+
+    $default  reduce using rule 68 (expressao_base)
+
+
+State 52
+
+   34 variavel: expressao_base . '[' expressao ']'
+
+    '['  shift, and go to state 77
+
+
+State 53
+
+    8 tipo: tipo . '[' ']'
+   69 expressao_base: TK_NEW tipo . '[' expressao ']'
+
+    '['  shift, and go to state 78
+
+
+State 54
+
+   61 expUnaria: '-' . expressao_base
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expressao_base  go to state 79
+
+
+State 55
+
+   62 expUnaria: '!' . expressao_base
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expressao_base  go to state 80
+
+
+State 56
+
+   66 expressao_base: variavel .
+
+    $default  reduce using rule 66 (expressao_base)
+
+
+State 57
+
+   68 expressao_base: chamada .
+
+    $default  reduce using rule 68 (expressao_base)
+
+
+State 58
+
+   29 comando: TK_IF expressao . bloco
+   30        | TK_IF expressao . bloco TK_ELSE bloco
+   41 expAs: expressao . TK_AS tipo
+
+    TK_AS  shift, and go to state 81
+    '{'    shift, and go to state 31
+
+    bloco  go to state 82
+
+
+State 59
+
+   40 expressao: expAs .
+
+    $default  reduce using rule 40 (expressao)
+
+
+State 60
+
+   42 expAs: expOr .
+   43 expOr: expOr . TK_OR expAnd
+
+    TK_OR  shift, and go to state 83
+
+    $default  reduce using rule 42 (expAs)
+
+
+State 61
+
+   44 expOr: expAnd .
+   46 expAnd: expAnd . TK_AND expCmp
+
+    TK_AND  shift, and go to state 84
+
+    $default  reduce using rule 44 (expOr)
+
+
+State 62
+
+   45 expAnd: expCmp .
+   47 expCmp: expCmp . TK_EQUAL expAdd
+   48       | expCmp . TK_NOTEQUAL expAdd
+   49       | expCmp . TK_LESSEQUAL expAdd
+   50       | expCmp . TK_GREATEREQUAL expAdd
+   51       | expCmp . '<' expAdd
+   52       | expCmp . '>' expAdd
+
+    TK_EQUAL         shift, and go to state 85
+    TK_NOTEQUAL      shift, and go to state 86
+    TK_LESSEQUAL     shift, and go to state 87
+    TK_GREATEREQUAL  shift, and go to state 88
+    '<'              shift, and go to state 89
+    '>'              shift, and go to state 90
+
+    $default  reduce using rule 45 (expAnd)
+
+
+State 63
+
+   53 expCmp: expAdd .
+   54 expAdd: expAdd . '+' expMult
+   55       | expAdd . '-' expMult
+
+    '+'  shift, and go to state 91
+    '-'  shift, and go to state 92
+
+    $default  reduce using rule 53 (expCmp)
+
+
+State 64
+
+   56 expAdd: expMult .
+   57 expMult: expMult . '*' expUnaria
+   58        | expMult . '/' expUnaria
+
+    '*'  shift, and go to state 93
+    '/'  shift, and go to state 94
+
+    $default  reduce using rule 56 (expAdd)
+
+
+State 65
+
+   59 expMult: expUnaria .
+
+    $default  reduce using rule 59 (expMult)
+
+
+State 66
+
+   34 variavel: expressao_base . '[' expressao ']'
+   60 expUnaria: expressao_base .
+
+    '['  shift, and go to state 77
+
+    $default  reduce using rule 60 (expUnaria)
+
+
+State 67
+
+   31 comando: TK_WHILE expressao . bloco
+   41 expAs: expressao . TK_AS tipo
+
+    TK_AS  shift, and go to state 81
+    '{'    shift, and go to state 31
+
+    bloco  go to state 95
+
+
+State 68
+
+   27 comando: TK_RETURN ';' .
+
+    $default  reduce using rule 27 (comando)
+
+
+State 69
+
+   26 comando: TK_RETURN expressao . ';'
+   41 expAs: expressao . TK_AS tipo
+
+    TK_AS  shift, and go to state 81
+    ';'    shift, and go to state 96
+
+
+State 70
+
+   35 chamada: TK_ID '(' . expressoes ')'
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    $default  reduce using rule 37 (expressoes)
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expressoes      go to state 97
+    lista_exp       go to state 98
+    expressao       go to state 99
+    expAs           go to state 59
+    expOr           go to state 60
+    expAnd          go to state 61
+    expCmp          go to state 62
+    expAdd          go to state 63
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 71
+
+   41 expAs: expressao . TK_AS tipo
+   67 expressao_base: '(' expressao . ')'
+
+    TK_AS  shift, and go to state 81
+    ')'    shift, and go to state 100
+
+
+State 72
+
+   25 comando: '@' expressao . ';'
+   41 expAs: expressao . TK_AS tipo
+
+    TK_AS  shift, and go to state 81
+    ';'    shift, and go to state 101
+
+
+State 73
+
+   19 bloco: '{' lista_def_var lista_comandos '}' .
+
+    $default  reduce using rule 19 (bloco)
+
+
+State 74
+
+   23 lista_comandos: comando lista_comandos .
+
+    $default  reduce using rule 23 (lista_comandos)
+
+
+State 75
+
+   28 comando: variavel '=' . expressao ';'
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expressao       go to state 102
+    expAs           go to state 59
+    expOr           go to state 60
+    expAnd          go to state 61
+    expCmp          go to state 62
+    expAdd          go to state 63
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 76
+
+   32 comando: chamada ';' .
+
+    $default  reduce using rule 32 (comando)
+
+
+State 77
+
+   34 variavel: expressao_base '[' . expressao ']'
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expressao       go to state 103
+    expAs           go to state 59
+    expOr           go to state 60
+    expAnd          go to state 61
+    expCmp          go to state 62
+    expAdd          go to state 63
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 78
+
+    8 tipo: tipo '[' . ']'
+   69 expressao_base: TK_NEW tipo '[' . expressao ']'
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    ']'        shift, and go to state 26
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expressao       go to state 104
+    expAs           go to state 59
+    expOr           go to state 60
+    expAnd          go to state 61
+    expCmp          go to state 62
+    expAdd          go to state 63
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 79
+
+   34 variavel: expressao_base . '[' expressao ']'
+   61 expUnaria: '-' expressao_base .
+
+    '['  shift, and go to state 77
+
+    $default  reduce using rule 61 (expUnaria)
+
+
+State 80
+
+   34 variavel: expressao_base . '[' expressao ']'
+   62 expUnaria: '!' expressao_base .
+
+    '['  shift, and go to state 77
+
+    $default  reduce using rule 62 (expUnaria)
+
+
+State 81
+
+   41 expAs: expressao TK_AS . tipo
+
+    TK_INT    shift, and go to state 11
+    TK_FLOAT  shift, and go to state 12
+    TK_CHAR   shift, and go to state 13
+    TK_VOID   shift, and go to state 14
+
+    tipo            go to state 105
+    tipo_primitivo  go to state 16
+
+
+State 82
+
+   29 comando: TK_IF expressao bloco .
+   30        | TK_IF expressao bloco . TK_ELSE bloco
+
+    TK_ELSE  shift, and go to state 106
+
+    $default  reduce using rule 29 (comando)
+
+
+State 83
+
+   43 expOr: expOr TK_OR . expAnd
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expAnd          go to state 107
+    expCmp          go to state 62
+    expAdd          go to state 63
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 84
+
+   46 expAnd: expAnd TK_AND . expCmp
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expCmp          go to state 108
+    expAdd          go to state 63
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 85
+
+   47 expCmp: expCmp TK_EQUAL . expAdd
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expAdd          go to state 109
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 86
+
+   48 expCmp: expCmp TK_NOTEQUAL . expAdd
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expAdd          go to state 110
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 87
+
+   49 expCmp: expCmp TK_LESSEQUAL . expAdd
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expAdd          go to state 111
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 88
+
+   50 expCmp: expCmp TK_GREATEREQUAL . expAdd
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expAdd          go to state 112
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 89
+
+   51 expCmp: expCmp '<' . expAdd
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expAdd          go to state 113
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 90
+
+   52 expCmp: expCmp '>' . expAdd
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expAdd          go to state 114
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 91
+
+   54 expAdd: expAdd '+' . expMult
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expMult         go to state 115
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 92
+
+   55 expAdd: expAdd '-' . expMult
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expMult         go to state 116
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 93
+
+   57 expMult: expMult '*' . expUnaria
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expUnaria       go to state 117
+    expressao_base  go to state 66
+
+
+State 94
+
+   58 expMult: expMult '/' . expUnaria
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    expUnaria       go to state 118
+    expressao_base  go to state 66
+
+
+State 95
+
+   31 comando: TK_WHILE expressao bloco .
+
+    $default  reduce using rule 31 (comando)
+
+
+State 96
+
+   26 comando: TK_RETURN expressao ';' .
+
+    $default  reduce using rule 26 (comando)
+
+
+State 97
+
+   35 chamada: TK_ID '(' expressoes . ')'
+
+    ')'  shift, and go to state 119
+
+
+State 98
+
+   36 expressoes: lista_exp .
+
+    $default  reduce using rule 36 (expressoes)
+
+
+State 99
+
+   38 lista_exp: expressao .
+   39          | expressao . ',' lista_exp
+   41 expAs: expressao . TK_AS tipo
+
+    TK_AS  shift, and go to state 81
+    ','    shift, and go to state 120
+
+    $default  reduce using rule 38 (lista_exp)
+
+
+State 100
+
+   67 expressao_base: '(' expressao ')' .
+
+    $default  reduce using rule 67 (expressao_base)
+
+
+State 101
+
+   25 comando: '@' expressao ';' .
+
+    $default  reduce using rule 25 (comando)
+
+
+State 102
+
+   28 comando: variavel '=' expressao . ';'
+   41 expAs: expressao . TK_AS tipo
+
+    TK_AS  shift, and go to state 81
+    ';'    shift, and go to state 121
+
+
+State 103
+
+   34 variavel: expressao_base '[' expressao . ']'
+   41 expAs: expressao . TK_AS tipo
+
+    TK_AS  shift, and go to state 81
+    ']'    shift, and go to state 122
+
+
+State 104
+
+   41 expAs: expressao . TK_AS tipo
+   69 expressao_base: TK_NEW tipo '[' expressao . ']'
+
+    TK_AS  shift, and go to state 81
+    ']'    shift, and go to state 123
+
+
+State 105
+
+    8 tipo: tipo . '[' ']'
+   41 expAs: expressao TK_AS tipo .
+
+    '['  shift, and go to state 22
+
+    $default  reduce using rule 41 (expAs)
+
+
+State 106
+
+   30 comando: TK_IF expressao bloco TK_ELSE . bloco
+
+    '{'  shift, and go to state 31
+
+    bloco  go to state 124
+
+
+State 107
+
+   43 expOr: expOr TK_OR expAnd .
+   46 expAnd: expAnd . TK_AND expCmp
+
+    TK_AND  shift, and go to state 84
+
+    $default  reduce using rule 43 (expOr)
+
+
+State 108
+
+   46 expAnd: expAnd TK_AND expCmp .
+   47 expCmp: expCmp . TK_EQUAL expAdd
+   48       | expCmp . TK_NOTEQUAL expAdd
+   49       | expCmp . TK_LESSEQUAL expAdd
+   50       | expCmp . TK_GREATEREQUAL expAdd
+   51       | expCmp . '<' expAdd
+   52       | expCmp . '>' expAdd
+
+    TK_EQUAL         shift, and go to state 85
+    TK_NOTEQUAL      shift, and go to state 86
+    TK_LESSEQUAL     shift, and go to state 87
+    TK_GREATEREQUAL  shift, and go to state 88
+    '<'              shift, and go to state 89
+    '>'              shift, and go to state 90
+
+    $default  reduce using rule 46 (expAnd)
+
+
+State 109
+
+   47 expCmp: expCmp TK_EQUAL expAdd .
+   54 expAdd: expAdd . '+' expMult
+   55       | expAdd . '-' expMult
+
+    '+'  shift, and go to state 91
+    '-'  shift, and go to state 92
+
+    $default  reduce using rule 47 (expCmp)
+
+
+State 110
+
+   48 expCmp: expCmp TK_NOTEQUAL expAdd .
+   54 expAdd: expAdd . '+' expMult
+   55       | expAdd . '-' expMult
+
+    '+'  shift, and go to state 91
+    '-'  shift, and go to state 92
+
+    $default  reduce using rule 48 (expCmp)
+
+
+State 111
+
+   49 expCmp: expCmp TK_LESSEQUAL expAdd .
+   54 expAdd: expAdd . '+' expMult
+   55       | expAdd . '-' expMult
+
+    '+'  shift, and go to state 91
+    '-'  shift, and go to state 92
+
+    $default  reduce using rule 49 (expCmp)
+
+
+State 112
+
+   50 expCmp: expCmp TK_GREATEREQUAL expAdd .
+   54 expAdd: expAdd . '+' expMult
+   55       | expAdd . '-' expMult
+
+    '+'  shift, and go to state 91
+    '-'  shift, and go to state 92
+
+    $default  reduce using rule 50 (expCmp)
+
+
+State 113
+
+   51 expCmp: expCmp '<' expAdd .
+   54 expAdd: expAdd . '+' expMult
+   55       | expAdd . '-' expMult
+
+    '+'  shift, and go to state 91
+    '-'  shift, and go to state 92
+
+    $default  reduce using rule 51 (expCmp)
+
+
+State 114
+
+   52 expCmp: expCmp '>' expAdd .
+   54 expAdd: expAdd . '+' expMult
+   55       | expAdd . '-' expMult
+
+    '+'  shift, and go to state 91
+    '-'  shift, and go to state 92
+
+    $default  reduce using rule 52 (expCmp)
+
+
+State 115
+
+   54 expAdd: expAdd '+' expMult .
+   57 expMult: expMult . '*' expUnaria
+   58        | expMult . '/' expUnaria
+
+    '*'  shift, and go to state 93
+    '/'  shift, and go to state 94
+
+    $default  reduce using rule 54 (expAdd)
+
+
+State 116
+
+   55 expAdd: expAdd '-' expMult .
+   57 expMult: expMult . '*' expUnaria
+   58        | expMult . '/' expUnaria
+
+    '*'  shift, and go to state 93
+    '/'  shift, and go to state 94
+
+    $default  reduce using rule 55 (expAdd)
+
+
+State 117
+
+   57 expMult: expMult '*' expUnaria .
+
+    $default  reduce using rule 57 (expMult)
+
+
+State 118
+
+   58 expMult: expMult '/' expUnaria .
+
+    $default  reduce using rule 58 (expMult)
+
+
+State 119
+
+   35 chamada: TK_ID '(' expressoes ')' .
+
+    $default  reduce using rule 35 (chamada)
+
+
+State 120
+
+   39 lista_exp: expressao ',' . lista_exp
+
+    TK_NEW     shift, and go to state 37
+    TK_DEC     shift, and go to state 41
+    TK_REAL    shift, and go to state 42
+    TK_ID      shift, and go to state 43
+    TK_STRING  shift, and go to state 44
+    '('        shift, and go to state 45
+    '-'        shift, and go to state 54
+    '!'        shift, and go to state 55
+
+    variavel        go to state 56
+    chamada         go to state 57
+    lista_exp       go to state 125
+    expressao       go to state 99
+    expAs           go to state 59
+    expOr           go to state 60
+    expAnd          go to state 61
+    expCmp          go to state 62
+    expAdd          go to state 63
+    expMult         go to state 64
+    expUnaria       go to state 65
+    expressao_base  go to state 66
+
+
+State 121
+
+   28 comando: variavel '=' expressao ';' .
+
+    $default  reduce using rule 28 (comando)
+
+
+State 122
+
+   34 variavel: expressao_base '[' expressao ']' .
+
+    $default  reduce using rule 34 (variavel)
+
+
+State 123
+
+   69 expressao_base: TK_NEW tipo '[' expressao ']' .
+
+    $default  reduce using rule 69 (expressao_base)
+
+
+State 124
+
+   30 comando: TK_IF expressao bloco TK_ELSE bloco .
+
+    $default  reduce using rule 30 (comando)
+
+
+State 125
+
+   39 lista_exp: expressao ',' lista_exp .
+
+    $default  reduce using rule 39 (lista_exp)

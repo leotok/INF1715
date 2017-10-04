@@ -1,7 +1,7 @@
 main:
-	lex lexico.lex
-	yacc -d -v grammar.y
-	cc lex.yy.c y.tab.c -o out
+	flex lexico.lex
+	bison -d -v grammar.y
+	cc lex.yy.c grammar.tab.c -o out
 
 testsyntax: main
 	python test.py unittest
@@ -12,5 +12,5 @@ saveresult:
 clean:
 	rm out
 	rm lex.yy.c
-	rm y.tab.c
-	rm y.tab.h
+	rm grammar.tab.c
+	rm grammar.tab.h
