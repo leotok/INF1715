@@ -3,7 +3,7 @@ main:
 	yacc -d -v grammar.y
 	cc lex.yy.c y.tab.c -o out
 
-testsyntax:
+testsyntax: main
 	python test.py unittest
 
 saveresult:

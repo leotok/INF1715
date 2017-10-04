@@ -45,10 +45,12 @@ lista_definicoes:      definicao
 definicao:             def_variavel
                    |   def_funcao                                   ;
 
-def_variavel:          TK_ID ':' tipo ';'                           ;
+def_variavel:       TK_ID ':' tipo ';'
+                    ;
 
-lista_def_var:         lista_def_var def_variavel
-                   |   /* vazio*/                                   ;
+lista_def_var:         /* vazio*/
+                  |    def_variavel lista_def_var
+                  ;
 
 tipo:                  tipo_primitivo
                    |   tipo '[' ']'                                 ;
@@ -70,73 +72,57 @@ parametro:              TK_ID ':' tipo                              ;
 
 bloco:                  '{' lista_def_var lista_comandos '}'        ;
 
-lista_comandos:         comando lista_comandos
+lista_comandos:     lista_comandos2;
                    |    /*vazio*/                                   ;
 
+lista_comandos2:   comando lista_comandos
+                  |
+                   ;
+
 comando:                bloco
-                   |    expressao ';'
                    |    '@' expressao ';'
-                   |    cmd_return
-                   |    variavel '=' expLogica ';'
-                   |    TK_IF  expLogica  bloco
-                   |    TK_IF  expLogica  bloco  TK_ELSE  bloco
-                   |    TK_WHILE    expLogica    bloco              ;
-
-
-cmd_return:             TK_RETURN expressao ';'                     ;
+                   |    TK_RETURN expressao ';'
+                   |    TK_RETURN ';'
+                   |    variavel '=' expressao ';'
+                   |    TK_IF  expressao  bloco
+                   |    TK_IF  expressao  bloco  TK_ELSE  bloco
+                   |    TK_WHILE    expressao    bloco              ;
 
 variavel:               TK_ID
-                   |    expressao_base '[' expLogica ']'            ;
+                   |    variavel '[' expressao ']'            ;
 
 chamada:                TK_ID '(' expressoes ')'                    ;
 
 expressoes:             lista_exp
                    |     /* vazio*/                                 ;
 
-lista_exp:              expLogica
-                   |    expLogica ',' lista_exp                     ;
+lista_exp:              expressao
+                   |    expressao ',' lista_exp                     ;
 
-expressao_base:          TK_DEC
-                     |   TK_REAL
-                     |   TK_STRING
-                     |   variavel
-                     |   '(' expLogica ')'
-                     |   chamada                                    ;
 
-expressao: expNew
-          | expAs                                                   ;
+expressao: expOr
+          ;
 
-expAs: expLogica TK_AS tipo                                         ;
-
-expNew: TK_NEW tipo '[' expLogica ']'
-        | expLogica                                                 ;
-
-expLogica:      expLogica TK_OR expAnd
+expOr:      expOr TK_OR expAnd
                 | expAnd                                            ;
 
 expAnd:         expCmp
                 | expAnd TK_AND expCmp                              ;
 
-opCmp:   TK_EQUAL
-        | TK_NOTEQUAL
-        | TK_LESSEQUAL
-        |	TK_GREATEREQUAL
-        | '<'
-        | '>'                                                       ;
+expCmp:   expCmp TK_EQUAL expAdd
+        | expCmp TK_NOTEQUAL expAdd
+        | expCmp TK_LESSEQUAL expAdd
+        |	expCmp TK_GREATEREQUAL expAdd
+        | expCmp'<' expAdd
+        | expCmp '>' expAdd
+        | expAdd;
 
-expCmp: expCmp opCmp expAdd
-        | expAdd                                                    ;
-
-addOp: '+'
-      | '-'                                                         ;
-
-expAdd: expAdd addOp expMult
+expAdd: expAdd '+' expMult
+        | expAdd '-' expMult
         | expMult                                                   ;
 
-multOp: '*'
-      | '/'                                                         ;
-
-expMult: expMult multOp expUnaria
+expMult: expMult '*' expUnaria
+        | expMult '/' expUnaria
         | expUnaria                                                 ;
 
 
@@ -144,7 +130,15 @@ expUnaria:              expressao_base
                 | '-'   expressao_base
                 | '!'   expressao_base                              ;
 
-
+expressao_base:     TK_DEC
+                |   TK_REAL
+                |   TK_STRING
+                |   variavel
+                |   '(' expressao ')'
+                |   chamada
+                |   expressao TK_AS tipo
+                |   TK_NEW tipo '[' expressao ']'
+                ;
 
 %%
 
