@@ -1,8 +1,8 @@
 Trabalho2/lex.yy.c
 Trabalho2/out
-Trabalho2/y.tab.c
-Trabalho2/y.tab.h
-Trabalho2/y.output
+Trabalho2/grammar.tab.c
+Trabalho2/grammar.tab.h
+Trabalho2/grammar.output
 
 main
 # Prerequisites
