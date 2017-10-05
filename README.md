@@ -8,12 +8,10 @@ http://www.inf.puc-rio.br/~roberto/comp/
 
 ## Analisador léxico
 ```
-$ make
-$ make testelex
+$ make testflex
 ```
 
 ## Analisador sintático
 ```
-$ make
 $ make testsyntax
 ```
