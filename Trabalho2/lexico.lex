@@ -1,7 +1,59 @@
 %{
 #include <stdio.h>
 #include "grammar.tab.h"
-extern int yylex (void);
+
+/* malloc string */
+static char* createstring(int length);
+
+/* strdup */
+static char * copystring(char *text);
+
+/* copy string translating escapes */
+static char* copyescapes(char *text);
+
+/* line counter */
+int yy_lines = 1;
+
+%}
+
+%%
+
+#[^\n]*                                 {}
+"\n"                                    {yy_lines++;}
+" "                                     {}
+"as"                                    { return TK_AS; }
+"int"                                   { return TK_INT; }
+"float"                                 { return TK_FLOAT; }
+"char"                                  { return TK_CHAR; }
+"void"                                  { return TK_VOID; }
+"new"                                   { return TK_NEW; }
+"if"                                    { return TK_IF; }
+"else"                                  { return TK_ELSE; }
+"while"                                 { return TK_WHILE; }
+"return"                                { return TK_RETURN; }
+"=="                                    { return TK_EQUAL; }
+"˜="                                    { return TK_NOTEQUAL; }
+"<="                                    { return TK_LESSEQUAL; }
+">="                                    { return TK_GREATEREQUAL; }
+"&&"                                    { return TK_AND; }
+"||"                                    { return TK_OR; }
+[a-zA-Z_][a-zA-Z0-9_]*                  { yylval.s = copystring(yytext); return TK_ID; }
+\"(\\.|[^\\"])*\"                       { yylval.s = copyescapes(yytext); return TK_STRING; }
+
+([1-9][0-9]*)|0                         { yylval.i = atoi(yytext); return TK_DEC; }
+0[xX][0-9a-fA-F]+|o[0-7]*               { yylval.i = strtol(yytext,NULL,0); return TK_DEC; }
+
+[0-9]+[Ee][+-]?[0-9]+(f|F)?		          { yylval.f = strtof(yytext,NULL); return TK_REAL;}
+[0-9]*"."[0-9]+([Ee][+-]?[0-9]+)?(f|F)?	{ yylval.f = strtof(yytext,NULL); return TK_REAL;}
+[0-9]+"."[0-9]*([Ee][+-]?[0-9]+)?(f|F)? { yylval.f = strtof(yytext,NULL); return TK_REAL;}
+
+0[xX][0-9a-fA-F]+[Pp][+-]?[0-9]+(f|F)?		                 { yylval.f = strtof(yytext,NULL); return TK_REAL;}
+0[xX][0-9a-fA-F]*"."[0-9a-fA-F]+([Pp][+-]?[0-9]+)?(f|F)?	 { yylval.f = strtof(yytext,NULL); return TK_REAL;}
+0[xX][0-9a-fA-F]+"."[0-9a-fA-F]*([Pp][+-]?[0-9]+)?(f|F)?   { yylval.f = strtof(yytext,NULL); return TK_REAL;}
+
+.                                       { return yytext[0]; }
+
+%%
 
 static char* createstring(int length) {
 
@@ -66,44 +118,3 @@ static char* copyescapes(char *text) {
     copy[j] = '\0';
     return copy;
 }
-
-int yy_lines = 1;
-
-%}
-
-%%
-
-#[^\n]*                                 {}
-"\n"                                    {yy_lines++;}
-" "                                     {}
-"as"                                    { return TK_AS; }
-"int"                                   { return TK_INT; }
-"float"                                 { return TK_FLOAT; }
-"char"                                  { return TK_CHAR; }
-"void"                                  { return TK_VOID; }
-"new"                                   { return TK_NEW; }
-"if"                                    { return TK_IF; }
-"else"                                  { return TK_ELSE; }
-"while"                                 { return TK_WHILE; }
-"return"                                { return TK_RETURN; }
-"=="                                    { return TK_EQUAL; }
-"˜="                                    { return TK_NOTEQUAL; }
-"<="                                    { return TK_LESSEQUAL; }
-">="                                    { return TK_GREATEREQUAL; }
-"&&"                                    { return TK_AND; }
-"||"                                    { return TK_OR; }
-[a-zA-Z_][a-zA-Z0-9_]*                  { yylval.s = copystring(yytext); return TK_ID; }
-\"(\\.|[^\\"])*\"                       { yylval.s = copyescapes(yytext); return TK_STRING; }
-
-([1-9][0-9]*)|0                         { yylval.i = atoi(yytext); return TK_DEC; }
-0[xX][0-9a-fA-F]+|o[0-7]*               { yylval.i = strtol(yytext,NULL,0); return TK_DEC; }
-
-[0-9]+[Ee][+-]?[0-9]+(f|F)?		          { yylval.f = strtof(yytext,NULL); return TK_REAL;}
-[0-9]*"."[0-9]+([Ee][+-]?[0-9]+)?(f|F)?	{ yylval.f = strtof(yytext,NULL); return TK_REAL;}
-[0-9]+"."[0-9]*([Ee][+-]?[0-9]+)?(f|F)? { yylval.f = strtof(yytext,NULL); return TK_REAL;}
-
-0[xX][0-9a-fA-F]+[Pp][+-]?[0-9]+(f|F)?		                 { yylval.f = strtof(yytext,NULL); return TK_REAL;}
-0[xX][0-9a-fA-F]*"."[0-9a-fA-F]+([Pp][+-]?[0-9]+)?(f|F)?	 { yylval.f = strtof(yytext,NULL); return TK_REAL;}
-0[xX][0-9a-fA-F]+"."[0-9a-fA-F]*([Pp][+-]?[0-9]+)?(f|F)?   { yylval.f = strtof(yytext,NULL); return TK_REAL;}
-
-.                                       { return yytext[0]; }

@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 
-int yylex();
-void yyerror(const char *str);
-int yywrap();
+int   yylex(void);
+void  yyerror(const char *str);
+int   yywrap(void);
 
 %}
 
@@ -38,135 +38,136 @@ int yywrap();
 %%
 
 programa:               lista_definicoes
-                      ;
+                    ;
 
 lista_definicoes:       definicao
-                   |    definicao lista_definicoes
-                   ;
+                    |   definicao lista_definicoes
+                    ;
 
 definicao:              def_variavel
-                   |    def_funcao
-                   ;
+                    |   def_funcao
+                    ;
 
 def_variavel:           TK_ID ':' tipo ';'
-                   ;
+                    ;
+
 tipo:                   tipo_primitivo
-                   |    tipo '[' ']'
-                   ;
+                    |   tipo '[' ']'
+                    ;
 
 tipo_primitivo:         TK_INT
-                   |    TK_FLOAT
-                   |    TK_CHAR
-                   |    TK_VOID
-                   ;
+                    |   TK_FLOAT
+                    |   TK_CHAR
+                    |   TK_VOID
+                    ;
 
 def_funcao:             TK_ID '(' parametros ')' ':' tipo bloco
-                   ;
+                    ;
 
-parametros:             lista_params
-                   |    /* vazio*/
-                   ;
+parametros:             /* vazio */
+                    |   lista_params
+                    ;
 
 lista_params:           parametro
-                   |    parametro ',' lista_params
-                   ;
-
-parametro:          TK_ID ':' tipo
+                    |   parametro ',' lista_params
                     ;
 
-bloco:              '{' lista_def_var lista_comandos '}'
+parametro:              TK_ID ':' tipo
                     ;
 
-lista_def_var:         /*vazio*/
-                  |    lista_def_var def_variavel
-                  ;
+bloco:                  '{' lista_def_var lista_comandos '}'
+                    ;
 
+lista_def_var:          /*vazio*/
+                    |   lista_def_var def_variavel
+                    ;
 
 lista_comandos:         /*vazio*/
-                   |    comando lista_comandos
-                   ;
-
+                    |   comando lista_comandos
+                    ;
 
 comando:                bloco
-                   |    '@' expressao ';'
-                   |    TK_RETURN expressao ';'
-                   |    TK_RETURN ';'
-                   |    variavel '=' expressao ';'
-                   |    TK_IF  expressao  bloco
-                   |    TK_IF  expressao  bloco  TK_ELSE  bloco
-                   |    TK_WHILE    expressao    bloco
-                   |    chamada ';'
-                   ;
+                    |   '@' expressao ';'
+                    |   TK_RETURN expressao ';'
+                    |   TK_RETURN ';'
+                    |   variavel '=' expressao ';'
+                    |   TK_IF  expressao  bloco
+                    |   TK_IF  expressao  bloco  TK_ELSE  bloco
+                    |   TK_WHILE    expressao    bloco
+                    |   chamada ';'
+                    ;
 
 variavel:               TK_ID
-                   |    expressao_base '[' expressao ']'
-                   ;
+                    |   expressao_base '[' expressao ']'
+                    ;
 
-chamada:                TK_ID '(' expressoes ')'
-                   ;
+chamada:                TK_ID '(' lista_exp ')'
+                    ;
 
-expressoes:             lista_exp
-                   |     /* vazio*/                                 ;
+lista_exp:              /* vazio*/
+                    |   lista_exp2
+                    ;
 
-lista_exp:              expressao
-                   |    expressao ',' lista_exp
-                   ;
+lista_exp2:             expressao
+                    |   expressao ',' lista_exp2
+                    ;
 
 expressao:              exp_or
-                   ;
+                    ;
 
-exp_or:                  exp_or TK_OR exp_and
-                  |     exp_and
-                  ;
+exp_or:                 exp_and
+                    |   exp_or TK_OR exp_and
+                    ;
 
-exp_and:                 exp_cmp
-                  |     exp_and TK_AND exp_cmp
-                  ;
+exp_and:                exp_cmp
+                    |   exp_and TK_AND exp_cmp
+                    ;
 
-exp_cmp:   exp_cmp TK_EQUAL exp_add
-        | exp_cmp TK_NOTEQUAL exp_add
-        | exp_cmp TK_LESSEQUAL exp_add
-        |	exp_cmp TK_GREATEREQUAL exp_add
-        | exp_cmp'<' exp_add
-        | exp_cmp '>' exp_add
-        | exp_add;
+exp_cmp:                exp_add
+                    |   exp_cmp TK_EQUAL exp_add
+                    |   exp_cmp TK_NOTEQUAL exp_add
+                    |   exp_cmp TK_LESSEQUAL exp_add
+                    |   exp_cmp TK_GREATEREQUAL exp_add
+                    |   exp_cmp'<' exp_add
+                    |   exp_cmp '>' exp_add
+                    ;
 
-exp_add: exp_add '+' exp_mult
-        | exp_add '-' exp_mult
-        | exp_mult                                                   
-;
+exp_add:                exp_mult
+                    |   exp_add '+' exp_mult
+                    |   exp_add '-' exp_mult
+                    ;
 
-exp_mult: exp_mult '*' exp_unaria
-        | exp_mult '/' exp_unaria
-        | exp_unaria                                                 
-;
+exp_mult:               exp_unaria
+                    |   exp_mult '*' exp_unaria
+                    |   exp_mult '/' exp_unaria
+                    ;
 
-exp_unaria:              exp_as
-                | '-'   exp_as
-                | '!'   exp_as                              
-;
+exp_unaria:             exp_as
+                    |   '-'   exp_unaria
+                    |   '!'   exp_unaria
+                    ;
 
 
-exp_as:                 expressao_base TK_AS tipo
-                  |    expressao_base
-;
+exp_as:                 expressao_base
+                    |   expressao_base TK_AS tipo
+                    ;
 
-expressao_base:     TK_DEC
-                |   TK_REAL
-                |   TK_STRING
-                |   variavel
-                |   '(' expressao ')'
-                |   chamada
-                |   TK_NEW tipo '[' expressao ']'
-                ;
+expressao_base:         TK_DEC
+                    |   TK_REAL
+                    |   TK_STRING
+                    |   variavel
+                    |   '(' expressao ')'
+                    |   chamada
+                    |   TK_NEW tipo '[' expressao ']'
+                    ;
 
 %%
 
 void yyerror(const char *str) {
-  printf("error: %s\n",str);
+  fprintf(stderr,"error: %s\n",str);
 }
 
-int yywrap() {
+int yywrap(void) {
   return 1;
 }
 
