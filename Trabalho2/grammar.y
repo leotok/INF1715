@@ -112,41 +112,44 @@ lista_exp:              expressao
                    |    expressao ',' lista_exp
                    ;
 
-expressao:              expAs
+expressao:              exp_or
                    ;
 
-expAs :                 expressao TK_AS tipo
-                  |     expOr
+exp_or:                  exp_or TK_OR exp_and
+                  |     exp_and
                   ;
 
-expOr:                  expOr TK_OR expAnd
-                  |     expAnd
+exp_and:                 exp_cmp
+                  |     exp_and TK_AND exp_cmp
                   ;
 
-expAnd:                 expCmp
-                  |     expAnd TK_AND expCmp
-                  ;
+exp_cmp:   exp_cmp TK_EQUAL exp_add
+        | exp_cmp TK_NOTEQUAL exp_add
+        | exp_cmp TK_LESSEQUAL exp_add
+        |	exp_cmp TK_GREATEREQUAL exp_add
+        | exp_cmp'<' exp_add
+        | exp_cmp '>' exp_add
+        | exp_add;
 
-expCmp:   expCmp TK_EQUAL expAdd
-        | expCmp TK_NOTEQUAL expAdd
-        | expCmp TK_LESSEQUAL expAdd
-        |	expCmp TK_GREATEREQUAL expAdd
-        | expCmp'<' expAdd
-        | expCmp '>' expAdd
-        | expAdd;
+exp_add: exp_add '+' exp_mult
+        | exp_add '-' exp_mult
+        | exp_mult                                                   
+;
 
-expAdd: expAdd '+' expMult
-        | expAdd '-' expMult
-        | expMult                                                   ;
+exp_mult: exp_mult '*' exp_unaria
+        | exp_mult '/' exp_unaria
+        | exp_unaria                                                 
+;
 
-expMult: expMult '*' expUnaria
-        | expMult '/' expUnaria
-        | expUnaria                                                 ;
+exp_unaria:              exp_as
+                | '-'   exp_as
+                | '!'   exp_as                              
+;
 
 
-expUnaria:              expressao_base
-                | '-'   expressao_base
-                | '!'   expressao_base                              ;
+exp_as:                 expressao_base TK_AS tipo
+                  |    expressao_base
+;
 
 expressao_base:     TK_DEC
                 |   TK_REAL
