@@ -105,4 +105,9 @@ int yy_lines = 1;
 [0-9]*"."[0-9]+([Ee][+-]?[0-9]+)?(f|F)?	{ seminfo.f = strtof(yytext,NULL); return TK_REAL;}
 [0-9]+"."[0-9]*([Ee][+-]?[0-9]+)?(f|F)? { seminfo.f = strtof(yytext,NULL); return TK_REAL;}
 
+0[xX][0-9a-fA-F]+[Pp][+-]?[0-9]+(f|F)?		                 { seminfo.f = strtof(yytext,NULL); return TK_REAL;}
+0[xX][0-9a-fA-F]*"."[0-9a-fA-F]+([Pp][+-]?[0-9]+)?(f|F)?	 { seminfo.f = strtof(yytext,NULL); return TK_REAL;}
+0[xX][0-9a-fA-F]+"."[0-9a-fA-F]*([Pp][+-]?[0-9]+)?(f|F)?   { seminfo.f = strtof(yytext,NULL); return TK_REAL;}
+
+
 .                                       { return yytext[0]; }

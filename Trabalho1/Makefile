@@ -1,9 +1,9 @@
-main: main.c
+main:
 	flex lexico.lex
 	gcc lex.yy.c -ll
 	cc -Wall -std=c99 -o main main.c lex.yy.c
 
-testelex:
+testflex: main
 	python test.py unittest
 
 clean:
