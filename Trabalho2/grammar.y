@@ -12,6 +12,23 @@ int   yywrap(void);
   int i;
   char *s;
   float f;
+  Programa* prog;
+
+
+  Def* def;
+  DefVar* defVar;
+  DefFunc* defFunc;
+  Parameter* param;
+  Exp* exp;
+  Type* type;
+  NameL* namelist;
+  CommandL* cmd;
+  Block* block;
+  DefVarL* dvl;
+  ExpList* el;
+  Constant* cons;
+
+
 }
 
 %token	TK_INT
@@ -34,6 +51,11 @@ int   yywrap(void);
 %token	TK_AND
 %token	TK_OR
 %token	TK_STRING
+
+%type<prog> programa
+%type <def> lista_definicoes  definicao
+%type <defVar> def_variavel
+%type <defFunc> def_funcao
 
 %%
 
