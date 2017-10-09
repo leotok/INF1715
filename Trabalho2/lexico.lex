@@ -1,6 +1,7 @@
 %{
 #include <stdio.h>
 #include "grammar.tab.h"
+#include "tree.h"
 
 /* malloc string */
 static char* createstring(int length);
