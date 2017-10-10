@@ -59,129 +59,129 @@ int   yywrap(void);
 
 %%
 
-programa:               lista_definicoes
-                    ;
+programa:               lista_definicoes                                  {printf($$);}
+;
 
-lista_definicoes:       definicao
-                    |   definicao lista_definicoes
-                    ;
+lista_definicoes:       definicao                                         {;}
+                    |   definicao lista_definicoes                        {;}
+;
 
-definicao:              def_variavel
-                    |   def_funcao
-                    ;
+definicao:              def_variavel                                      {;}
+                    |   def_funcao                                        {;}
+;
 
-def_variavel:           TK_ID ':' tipo ';'
-                    ;
+def_variavel:           TK_ID ':' tipo ';'                                {;}
+;
 
-tipo:                   tipo_primitivo
-                    |   tipo '[' ']'
-                    ;
+tipo:                   tipo_primitivo                                    {;}
+                    |   tipo '[' ']'                                      {;}
+;
 
-tipo_primitivo:         TK_INT
-                    |   TK_FLOAT
-                    |   TK_CHAR
-                    |   TK_VOID
-                    ;
+tipo_primitivo:         TK_INT                                            {;}
+                    |   TK_FLOAT                                          {;}
+                    |   TK_CHAR                                           {;}
+                    |   TK_VOID                                           {;}
+;
 
-def_funcao:             TK_ID '(' parametros ')' ':' tipo bloco
-                    ;
+def_funcao:             TK_ID '(' parametros ')' ':' tipo bloco           {;}
+;
 
-parametros:             /* vazio */
-                    |   lista_params
-                    ;
+parametros:             /* vazio */                                       {;}
+                    |   lista_params                                      {;}
+;
 
-lista_params:           parametro
-                    |   parametro ',' lista_params
-                    ;
+lista_params:           parametro                                         {;}
+                    |   parametro ',' lista_params                        {;}
+;
 
-parametro:              TK_ID ':' tipo
-                    ;
+parametro:              TK_ID ':' tipo                                    {;}
+;
 
-bloco:                  '{' lista_def_var lista_comandos '}'
-                    ;
+bloco:                  '{' lista_def_var lista_comandos '}'              {;}
+;
 
-lista_def_var:          /*vazio*/
-                    |   lista_def_var def_variavel
-                    ;
+lista_def_var:          /*vazio*/                                         {;}
+                    |   lista_def_var def_variavel                        {;}
+;
 
-lista_comandos:         /*vazio*/
-                    |   comando lista_comandos
-                    ;
+lista_comandos:         /*vazio*/                                         {;}
+                    |   comando lista_comandos                            {;}
+;
 
-comando:                bloco
-                    |   '@' expressao ';'
-                    |   TK_RETURN expressao ';'
-                    |   TK_RETURN ';'
-                    |   variavel '=' expressao ';'
-                    |   TK_IF  expressao  bloco
-                    |   TK_IF  expressao  bloco  TK_ELSE  bloco
-                    |   TK_WHILE    expressao    bloco
-                    |   chamada ';'
-                    ;
+comando:                bloco                                             {;}
+                    |   '@' expressao ';'                                 {;}
+                    |   TK_RETURN expressao ';'                           {;}
+                    |   TK_RETURN ';'                                     {;}
+                    |   variavel '=' expressao ';'                        {;}
+                    |   TK_IF  expressao  bloco                           {;}
+                    |   TK_IF  expressao  bloco  TK_ELSE  bloco           {;}
+                    |   TK_WHILE    expressao    bloco                    {;}
+                    |   chamada ';'                                       {;}
+;
 
-variavel:               TK_ID
-                    |   expressao_base '[' expressao ']'
-                    ;
+variavel:               TK_ID                                             {;}
+                    |   expressao_base '[' expressao ']'                  {;}
+;
 
-chamada:                TK_ID '(' lista_exp ')'
-                    ;
+chamada:                TK_ID '(' lista_exp ')'                           {;}
+;
 
-lista_exp:              /* vazio*/
-                    |   lista_exp2
-                    ;
+lista_exp:              /* vazio*/                                        {;}
+                    |   lista_exp2                                        {;}
+;
 
-lista_exp2:             expressao
-                    |   expressao ',' lista_exp2
-                    ;
+lista_exp2:             expressao                                         {;}
+                    |   expressao ',' lista_exp2                          {;}
+;
 
-expressao:              exp_or
-                    ;
+expressao:              exp_or                                            {;}
+;
 
-exp_or:                 exp_and
-                    |   exp_or TK_OR exp_and
-                    ;
+exp_or:                 exp_and                                           {;}
+                    |   exp_or TK_OR exp_and                              {;}
+;
 
-exp_and:                exp_cmp
-                    |   exp_and TK_AND exp_cmp
-                    ;
+exp_and:                exp_cmp                                           {;}
+                    |   exp_and TK_AND exp_cmp                            {;}
+;
 
-exp_cmp:                exp_add
-                    |   exp_cmp TK_EQUAL exp_add
-                    |   exp_cmp TK_NOTEQUAL exp_add
-                    |   exp_cmp TK_LESSEQUAL exp_add
-                    |   exp_cmp TK_GREATEREQUAL exp_add
-                    |   exp_cmp'<' exp_add
-                    |   exp_cmp '>' exp_add
-                    ;
+exp_cmp:                exp_add                                           {;}
+                    |   exp_cmp TK_EQUAL exp_add                          {;}
+                    |   exp_cmp TK_NOTEQUAL exp_add                       {;}
+                    |   exp_cmp TK_LESSEQUAL exp_add                      {;}
+                    |   exp_cmp TK_GREATEREQUAL exp_add                   {;}
+                    |   exp_cmp'<' exp_add                                {;}
+                    |   exp_cmp '>' exp_add                               {;}
+;
 
-exp_add:                exp_mult
-                    |   exp_add '+' exp_mult
-                    |   exp_add '-' exp_mult
-                    ;
+exp_add:                exp_mult                                          {;}
+                    |   exp_add '+' exp_mult                              {;}
+                    |   exp_add '-' exp_mult                              {;}
+;
 
-exp_mult:               exp_unaria
-                    |   exp_mult '*' exp_unaria
-                    |   exp_mult '/' exp_unaria
-                    ;
+exp_mult:               exp_unaria                                        {;}
+                    |   exp_mult '*' exp_unaria                           {;}
+                    |   exp_mult '/' exp_unaria                           {;}
+;
 
-exp_unaria:             exp_as
-                    |   '-'   exp_unaria
-                    |   '!'   exp_unaria
-                    ;
+exp_unaria:             exp_as                                            {;}
+                    |   '-'   exp_unaria                                  {;}
+                    |   '!'   exp_unaria                                  {;}
+;
 
 
-exp_as:                 expressao_base
-                    |   expressao_base TK_AS tipo
-                    ;
+exp_as:                 expressao_base                                    {;}
+                    |   expressao_base TK_AS tipo                         {;}
+;
 
-expressao_base:         TK_DEC
-                    |   TK_REAL
-                    |   TK_STRING
-                    |   variavel
-                    |   '(' expressao ')'
-                    |   chamada
-                    |   TK_NEW tipo '[' expressao ']'
-                    ;
+expressao_base:         TK_DEC                                            {;}
+                    |   TK_REAL                                           {;}
+                    |   TK_STRING                                         {;}
+                    |   variavel                                          {;}
+                    |   '(' expressao ')'                                 {;}
+                    |   chamada                                           {;}
+                    |   TK_NEW tipo '[' expressao ']'                     {;}
+;
 
 %%
 
