@@ -6,7 +6,7 @@
 /*
 *  Constante
 */
-typedef enum CTE_TAG { TK_DEC, TK_REAL, TK_STRING } CTE_TAG;
+typedef enum CTE_TAG { CDEC, CREAL, CSTRING } CTE_TAG;
 typedef struct Constante
 {
 	CTE_TAG tag;
@@ -20,26 +20,20 @@ typedef struct Constante
 /*
 * Tipo
 */
-typedef enum TipoPrim_TAG { pInt, pFloat, pChar} TipoPrim_TAG;
-typedef enum Tipo_TAG { base, array} TipoComp_TAG;
+typedef enum Tipo_TAG { pInt, pFloat, pChar, array} Tipo_TAG;
 
-typedef enum Tipo
+typedef union Tipo
 {
 	Tipo_TAG tag;
   struct {
     Tipo_TAG tag;
-    TipoPrim_TAG tipoprim;
-  } prim;
-  struct {
-    Tipo_TAG tag;
-    enum Tipo *tipo;
-  } prim;
+    union Tipo *tipo;
+  } array;
 } Tipo;
 
 /*
 * Definicao Variavel
 */
-typedef enum TipoDef_TAG { DefFunc, DefVar} TipoDef_TAG;
 //typedef enum EscopoTag { EscopoGlobal,EscopoLocal } EscopoTag;
 
 typedef struct DefVar
@@ -162,7 +156,7 @@ typedef union Exp{
     const char *idFunc;
     //DefFunc *decl; pra costurar depois(?)
   } expchamada;
-};
+}Exp;
 
 typedef struct ExpL
 {
@@ -174,16 +168,16 @@ typedef struct ExpL
 * Comando
 */
 typedef enum CMD_TAG {
-  ST_ATR, /* atribuição */
-  ST_WHILE,DefVarL * declVars;
-    struct CMDL *cmds;
-  ST_IF,
-  ST_SKIP,
-  ST_RETURN,
-  ST_CHAMADA,
-  ST_BLOCK,
-  ST_SEQ
-} ST_TAG;
+  CMD_ATR, /* atribuição */
+  CMD_WHILE,
+  CMD_IF,
+  CMD_SKIP,
+  CMD_RETURN,
+  CMD_CHAMADA,
+	CMD_BLOCK,
+	CMD_PRINT,
+  CMD_SEQ
+} CMD_TAG;
 
 typedef union CMD {
   CMD_TAG tag;

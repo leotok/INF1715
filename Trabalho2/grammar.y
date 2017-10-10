@@ -1,6 +1,7 @@
 %{
 #include <stdio.h>
 #include <string.h>
+#include "tree.h"
 
 int   yylex(void);
 void  yyerror(const char *str);
@@ -12,23 +13,20 @@ int   yywrap(void);
   int i;
   char *s;
   float f;
-  Programa* prog;
-
-
-  Def* def;
+/*
+  Programa *prog;
+  Definicao* def;
   DefVar* defVar;
   DefFunc* defFunc;
-  Parameter* param;
+  ParametroL* params;
   Exp* exp;
-  Type* type;
-  NameL* namelist;
-  CommandL* cmd;
-  Block* block;
-  DefVarL* dvl;
-  ExpList* el;
-  Constant* cons;
-
-
+  Tipo* type;
+  CMDL* cmd;
+  Bloco* bloco;
+  DefVarL* defvars;
+  ExpL* expl;
+  Constante* cons;
+  */
 }
 
 %token	TK_INT
@@ -52,10 +50,7 @@ int   yywrap(void);
 %token	TK_OR
 %token	TK_STRING
 
-%type<prog> programa
-%type <def> lista_definicoes  definicao
-%type <defVar> def_variavel
-%type <defFunc> def_funcao
+
 
 %%
 
