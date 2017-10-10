@@ -1,32 +1,27 @@
 %{
 #include <stdio.h>
 #include <string.h>
-#include "tree.h"
+#include "ast.h"
 
 int   yylex(void);
 void  yyerror(const char *str);
 int   yywrap(void);
 
+ABS_node* programNode = NULL;
+
 %}
 
-%union{
-  int i;
-  char *s;
-  float f;
-/*
-  Programa *prog;
-  Definicao* def;
-  DefVar* defVar;
-  DefFunc* defFunc;
-  ParametroL* params;
-  Exp* exp;
-  Tipo* type;
-  CMDL* cmd;
-  Bloco* bloco;
-  DefVarL* defvars;
-  ExpL* expl;
-  Constante* cons;
-  */
+%union {
+    char* 	vString;
+    int 	vInt;	
+    float 	vFloat;
+ 
+    struct id {
+        char* 	name;
+        int 	lineNumber;
+    } vId;
+
+    ABS_node* vNode;	
 }
 
 %token	TK_INT
