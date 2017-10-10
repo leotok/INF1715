@@ -1,8 +1,7 @@
 #ifndef ABSTRACTSYNTAXTREE_HEADER
 #define ABSTRACTSYNTAXTREE_HEADER
 
-int TYP_getID(TYP_typeEnum type);
-int TYP_array(int type);
+
 
 
 typedef enum typeEnum {
@@ -12,6 +11,9 @@ typedef enum typeEnum {
 	VOID,
     TYPEQTY 
 } TYP_typeEnum;
+
+int TYP_getID(TYP_typeEnum type);
+int TYP_array(int type);
 
 
 // Tree node types
@@ -201,7 +203,7 @@ struct abs_node {
 
 // -------------
 
-#include "monga.tab.h"
+#include "grammar.tab.h"
 extern ABS_node* programNode;
 
 

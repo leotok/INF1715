@@ -1,7 +1,7 @@
 main:
 	flex lexico.lex
 	bison -d -v grammar.y
-	cc lex.yy.c grammar.tab.c -o out
+	cc lex.yy.c grammar.tab.c ast.c -o out
 
 testsyntax: main
 	python test.py unittest

@@ -1,4 +1,4 @@
-#include "absSyntaxTree.h"
+#include "ast.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -498,19 +498,19 @@ void print_operator( int type , int deepness ) {
 	print_ident( deepness );
 	
 	switch( type ) {
-		case TK_GE:
+		case TK_GREATEREQUAL:
 			printf(">=");
 			break;
 			
-		case TK_LE:
+		case TK_LESSEQUAL:
 			printf("<=");
 			break;
 
-		case TK_CE:
+		case TK_EQUAL:
 			printf("==");
 			break;	
 			
-		case TK_NE:
+		case TK_NOTEQUAL:
 			printf("!=");
 			break;	
 			
