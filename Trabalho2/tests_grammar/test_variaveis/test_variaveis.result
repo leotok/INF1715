@@ -1,0 +1,20 @@
+Line 1	TK_ID x
+Line 1	:
+Line 1	TK_INT
+Line 1	=
+Line 1	TK_DEC 10
+Line 1	;
+Line 3	TK_ID y
+Line 3	:
+Line 3	TK_FLOAT
+Line 3	=
+Line 3	TK_REAL 10.000000
+Line 3	;
+Line 5	TK_ID a
+Line 5	:
+Line 5	TK_CHAR
+Line 5	=
+Line 5	'
+Line 5	@
+Line 5	'
+Line 5	;

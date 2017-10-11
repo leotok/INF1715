@@ -1,0 +1,31 @@
+
+    1  [Variable Declaration]
+    2    <Char>
+    2    x
+    1  [Variable Declaration]
+    2    <Integer>
+    2    y
+    1  [Variable Declaration]
+    2    <Float>
+    2    z
+    1  [Variable Declaration]
+    2    <Char[]>
+    2    vx
+    1  [Variable Declaration]
+    2    <Char[][]>
+    2    vvx
+    1  [Variable Declaration]
+    2    <Integer[]>
+    2    vy
+    1  [Variable Declaration]
+    2    <Integer[][]>
+    2    vvy
+    1  [Variable Declaration]
+    2    <Float[]>
+    2    vz
+    1  [Variable Declaration]
+    2    <Float[][]>
+    2    vvz
+    1  [Variable Declaration]
+    2    <Float[][][][][]>
+    2    vvvvz

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void print_nodeLoop( ABS_node* node , int deepness );
+void print_nodeLoop( AST_node* node , int deepness );
 static int printType;
 
 // Return the int id of the type
@@ -57,10 +57,10 @@ char* UTIX_stringCopy( char* str ) {
 
 
 
-ABS_node* createNode( int type , int tag ) {
-	ABS_node* node;
+AST_node* createNode( int type , int tag ) {
+	AST_node* node;
 	
-	node = (ABS_node*) malloc( sizeof(ABS_node) );
+	node = (AST_node*) malloc( sizeof(AST_node) );
 	if( node == NULL ) {
 		fprintf(stderr, "\n\x1B[91mAllocation Error: new node" );
 		fprintf(stderr, "\x1B[0m\n" );
@@ -80,8 +80,8 @@ ABS_node* createNode( int type , int tag ) {
 
 // ----------------------------------------------------------------------------
 
-ABS_node* ABS_literalInt(int value) {
-	ABS_node* newNode;
+AST_node* ABS_literalInt(int value) {
+	AST_node* newNode;
 	
     newNode = createNode( TYPE_EXP , LIT_INT );
         
@@ -92,8 +92,8 @@ ABS_node* ABS_literalInt(int value) {
 }
 
 
-ABS_node* ABS_literalFloat(float value) {
-	ABS_node* newNode;
+AST_node* ABS_literalFloat(float value) {
+	AST_node* newNode;
 	
 	newNode = createNode( TYPE_EXP , LIT_FLOAT );
         
@@ -104,8 +104,8 @@ ABS_node* ABS_literalFloat(float value) {
 }
 
 
-ABS_node* ABS_literalString( char * str ) {
-	ABS_node* newNode;
+AST_node* ABS_literalString( char * str ) {
+	AST_node* newNode;
 	
 	newNode = createNode( TYPE_EXP , LIT_STRING );
 	
@@ -116,8 +116,8 @@ ABS_node* ABS_literalString( char * str ) {
 }
 
 
-ABS_node* ABS_id( char * name ) {
-    ABS_node* newNode;
+AST_node* ABS_id( char * name ) {
+    AST_node* newNode;
     
     newNode = createNode( TYPE_ID, ID );
     
@@ -127,8 +127,8 @@ ABS_node* ABS_id( char * name ) {
 }
 
 
-ABS_node* ABS_typecast( int type , ABS_node* exp) {
-	ABS_node * newNode;
+AST_node* ABS_typecast( int type , AST_node* exp) {
+	AST_node * newNode;
 		
     newNode = createNode( TYPE_EXP , CAST );	
 		
@@ -139,8 +139,8 @@ ABS_node* ABS_typecast( int type , ABS_node* exp) {
 }
 
 
-ABS_node* ABS_expOpr( int opr, ABS_node* exp1, ABS_node* exp2 ) {
-	ABS_node* newNode;
+AST_node* ABS_expOpr( int opr, AST_node* exp1, AST_node* exp2 ) {
+	AST_node* newNode;
 	
 	if (exp2 == NULL) {
         newNode = createNode( TYPE_EXP , EXP_UNOP );
@@ -158,8 +158,8 @@ ABS_node* ABS_expOpr( int opr, ABS_node* exp1, ABS_node* exp2 ) {
 }
 
 
-ABS_node* ABS_expParented(ABS_node* exp) {
-    ABS_node* newNode;
+AST_node* ABS_expParented(AST_node* exp) {
+    AST_node* newNode;
     
     newNode = createNode( TYPE_EXP , EXP_PAREN);
     
@@ -169,8 +169,8 @@ ABS_node* ABS_expParented(ABS_node* exp) {
 }
 
 
-ABS_node* ABS_expVar( ABS_node* var ) {
-	ABS_node* newNode;
+AST_node* ABS_expVar( AST_node* var ) {
+	AST_node* newNode;
 
     newNode = createNode( TYPE_EXP , EXP_VAR );
     
@@ -181,8 +181,8 @@ ABS_node* ABS_expVar( ABS_node* var ) {
 }
 
 
-ABS_node* ABS_expNew( int type, ABS_node* exp ) {
-	ABS_node* newNode;
+AST_node* ABS_expNew( int type, AST_node* exp ) {
+	AST_node* newNode;
 	
 	newNode = createNode( TYPE_EXP , EXP_NEW );
 
@@ -193,8 +193,8 @@ ABS_node* ABS_expNew( int type, ABS_node* exp ) {
 }
 
 
-ABS_node* ABS_expCall( ABS_node* exp1 , ABS_node* exp2 ) {
-	ABS_node* newNode;
+AST_node* ABS_expCall( AST_node* exp1 , AST_node* exp2 ) {
+	AST_node* newNode;
 
     newNode = createNode( TYPE_EXP , EXP_CALL );
     
@@ -205,8 +205,8 @@ ABS_node* ABS_expCall( ABS_node* exp1 , ABS_node* exp2 ) {
 }
 
 
-ABS_node* ABS_varArray(ABS_node* exp1, ABS_node* exp2) {
-	ABS_node* newNode;
+AST_node* ABS_varArray(AST_node* exp1, AST_node* exp2) {
+	AST_node* newNode;
 
     newNode = createNode( TYPE_VAR , VAR_ARRAY );
     
@@ -217,8 +217,8 @@ ABS_node* ABS_varArray(ABS_node* exp1, ABS_node* exp2) {
 }
 
 
-ABS_node* ABS_varMono(ABS_node* id){
-	ABS_node* newNode;
+AST_node* ABS_varMono(AST_node* id){
+	AST_node* newNode;
 
     newNode = createNode( TYPE_VAR , VAR_MONO );
     
@@ -229,7 +229,7 @@ ABS_node* ABS_varMono(ABS_node* id){
 }
 
 
-ABS_node* ABS_declVar(int type, ABS_node* id){
+AST_node* ABS_declVar(int type, AST_node* id){
 	/* SUGAR
 		Declarações do tipo: <type> <id1>,<id2>,<id3>...;
 		serão transformadas em uma lista de declarações:
@@ -238,12 +238,12 @@ ABS_node* ABS_declVar(int type, ABS_node* id){
 		<type> <id3>; ...
 	*/
 
-	ABS_node* declFirstNode = NULL;
-	ABS_node* declLastNode = NULL;
-	ABS_node* declCurrentNode;	
+	AST_node* declFirstNode = NULL;
+	AST_node* declLastNode = NULL;
+	AST_node* declCurrentNode;	
 		
-	ABS_node* idListCurrentNode;
-	ABS_node* idListNextNode;
+	AST_node* idListCurrentNode;
+	AST_node* idListNextNode;
 	
 	char lastIdFlag = 0;
 	
@@ -288,8 +288,8 @@ ABS_node* ABS_declVar(int type, ABS_node* id){
 }
 
 
-ABS_node* ABS_declFunc(int type, ABS_node* id, ABS_node* param, ABS_node* block) {
-	ABS_node* newNode;
+AST_node* ABS_declFunc(int type, AST_node* id, AST_node* param, AST_node* block) {
+	AST_node* newNode;
 	
     newNode = createNode( TYPE_DECL , DEC_FUNC );
 
@@ -304,8 +304,8 @@ ABS_node* ABS_declFunc(int type, ABS_node* id, ABS_node* param, ABS_node* block)
 
 // Commands -------------------------------------------------
 
-ABS_node* ABS_cmdIf(ABS_node* exp, ABS_node* cmd1, ABS_node* cmd2 ) {
-	ABS_node* newNode;
+AST_node* ABS_cmdIf(AST_node* exp, AST_node* cmd1, AST_node* cmd2 ) {
+	AST_node* newNode;
 
     newNode = createNode( TYPE_CMD , CMD_IF);
     
@@ -317,8 +317,8 @@ ABS_node* ABS_cmdIf(ABS_node* exp, ABS_node* cmd1, ABS_node* cmd2 ) {
 }
 
 
-ABS_node* ABS_cmdWhile(ABS_node* exp, ABS_node* cmd) {
-	ABS_node* newNode;
+AST_node* ABS_cmdWhile(AST_node* exp, AST_node* cmd) {
+	AST_node* newNode;
 
     newNode = createNode( TYPE_CMD , CMD_WHILE );
     
@@ -329,8 +329,8 @@ ABS_node* ABS_cmdWhile(ABS_node* exp, ABS_node* cmd) {
 }
 
 
-ABS_node* ABS_cmdAttr( ABS_node* var , ABS_node* exp ) {
-	ABS_node* newNode;
+AST_node* ABS_cmdAttr( AST_node* var , AST_node* exp ) {
+	AST_node* newNode;
 	
     newNode = createNode( TYPE_CMD , CMD_ATTR );
     
@@ -341,8 +341,8 @@ ABS_node* ABS_cmdAttr( ABS_node* var , ABS_node* exp ) {
 }
 
 
-ABS_node* ABS_cmdRet( ABS_node* exp ) {
-	ABS_node* newNode;
+AST_node* ABS_cmdRet( AST_node* exp ) {
+	AST_node* newNode;
     
     newNode = createNode( TYPE_CMD , CMD_RET );
     newNode->node.cmd.retcmd.exp = exp;
@@ -350,8 +350,8 @@ ABS_node* ABS_cmdRet( ABS_node* exp ) {
 }
 
 
-ABS_node* ABS_cmdExp(ABS_node* exp) {
-	ABS_node* newNode;
+AST_node* ABS_cmdExp(AST_node* exp) {
+	AST_node* newNode;
 
     newNode = createNode( TYPE_CMD , CMD_EXP );
     
@@ -361,8 +361,8 @@ ABS_node* ABS_cmdExp(ABS_node* exp) {
 }
 
 
-ABS_node* ABS_block(ABS_node* decl, ABS_node* cmd ) {
-	ABS_node* newNode;
+AST_node* ABS_block(AST_node* decl, AST_node* cmd ) {
+	AST_node* newNode;
 	
     newNode = createNode( TYPE_CMD , CMD_BLOCK );
     
@@ -374,8 +374,8 @@ ABS_node* ABS_block(ABS_node* decl, ABS_node* cmd ) {
 
 // Lists --------------------------------------------------------
 
-ABS_node* ABS_mergeList( ABS_node* list , ABS_node* element ) {
-	ABS_node* ret = NULL;
+AST_node* ABS_mergeList( AST_node* list , AST_node* element ) {
+	AST_node* ret = NULL;
 	
 	if (list == NULL) {
 		ret = element;
@@ -403,30 +403,15 @@ void newLine(int ident){
 
 void print_ident(int level) {
 	int i;
-	int color;
-	
-	if( printType == 1 ) {
-	// Print to File
-		printf("%5d",level);
-	} else {
-	// Print to screen
-		color = level % 4;
-		printf("\x1B[9%dm" , color+1);
-	}
 
-
-	// Identacao
+	printf("%5d",level);
 	for( i = 0 ; i < level ; i++ ) {
-		printf("..");
+		printf("  ");
 	}
-	
-	// Reseta cor
-	if( printType == 2 ) {
-		printf("\x1B[0m");
-	}
+
 }
 
-void print_nodeType( ABS_node* node ) { 
+void print_nodeType( AST_node* node ) { 
 	switch( node->type ) {
 		case TYPE_ID:
 			printf("ID");
@@ -528,16 +513,15 @@ void print_operator( int type , int deepness ) {
 	}
 }
 
-void print_nodeUnknown( ABS_node* node , int deepness ) {
+void print_nodeUnknown( AST_node* node , int deepness ) {
 	printf("[Unknown Node Type]");
 }
 
-void print_nodeId( ABS_node* node , int deepness ) {
+void print_nodeId( AST_node* node , int deepness ) {
 	printf("%s" , node->node.id.name );
 }
- 
 
-void print_nodeExp( ABS_node* node , int deepness ) {
+void print_nodeExp( AST_node* node , int deepness ) {
 	printf("[Exp]");
 	//printf("tag: %d" , node->tag );
 	deepness++;
@@ -600,14 +584,14 @@ void print_nodeExp( ABS_node* node , int deepness ) {
 	}
 }
 
-void print_nodeVar( ABS_node* node , int deepness ) {
+void print_nodeVar( AST_node* node , int deepness ) {
 	printf("[Variable]");
 	print_nodeLoop(  node->node.var.id , deepness + 1 );
 	//print_nodeLoop(  node->node.var.index , deepness + 1 );
 }
 
 
-void print_nodeCmd( ABS_node* node , int deepness ) {
+void print_nodeCmd( AST_node* node , int deepness ) {
 	switch( node->tag ) {	
 		case CMD_IF:
 			printf("[If]");
@@ -646,7 +630,7 @@ void print_nodeCmd( ABS_node* node , int deepness ) {
 	}
 }
 
-void print_nodeVarDeclaration( ABS_node* node , int deepness ) {
+void print_nodeVarDeclaration( AST_node* node , int deepness ) {
 	printf("[Variable Declaration]");
 	deepness++;
 	printf("\n");
@@ -656,7 +640,7 @@ void print_nodeVarDeclaration( ABS_node* node , int deepness ) {
 	print_nodeLoop( node->node.decl.vardecl.id , deepness );	
 }
 
-void print_nodeFuncDeclaration( ABS_node* node , int deepness ) {
+void print_nodeFuncDeclaration( AST_node* node , int deepness ) {
 	printf("[Function Declaration]");
 	deepness++;
 	printf("\n");
@@ -667,7 +651,7 @@ void print_nodeFuncDeclaration( ABS_node* node , int deepness ) {
 	print_nodeLoop( node->node.decl.funcdecl.block, deepness );		
 }
 
-void print_nodeDeclaration( ABS_node* node , int deepness ) { 
+void print_nodeDeclaration( AST_node* node , int deepness ) { 
 	switch( node->tag ) {
 		case DEC_VAR:
 			print_nodeVarDeclaration(  node , deepness );
@@ -678,8 +662,8 @@ void print_nodeDeclaration( ABS_node* node , int deepness ) {
 	}
 }
 
-void print_nodeInfo( ABS_node* node , int deepness ) {
-	switch( node->type ) {
+void print_nodeInfo(AST_node* node, int deepness) {
+	switch(node->type) {
 		case TYPE_ID:
 			print_nodeId( node, deepness );
 			return;
@@ -706,31 +690,21 @@ void print_nodeInfo( ABS_node* node , int deepness ) {
 	}
 }
 
-void print_nodeLoop( ABS_node* node , int deepness ) {
-	ABS_node* thisNode = node;
+void print_nodeLoop( AST_node* node , int level ) {
+	AST_node* thisNode = node;
 	
 	while( thisNode != NULL ) {
 		printf("\n");
-		print_ident( deepness );
-		
-		//print_genericNodeInfo( thisNode , deepness );
-		print_nodeInfo( thisNode , deepness );
-		
+		print_ident(level);
+		print_nodeInfo(thisNode, level);
 		thisNode = thisNode->next;
 	}
 }
 
-
-
-void ABS_print( int style ) {
-	int level = 1;
-	
-	printType = style;
-	
-	print_nodeLoop( programNode , level );
-	
+void ABS_print_tree() {
+	int startLevel = 1;
+	print_nodeLoop( programNode , startLevel );
 	printf("\n");
-
 }
 
 

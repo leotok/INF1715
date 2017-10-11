@@ -1,0 +1,16 @@
+y: int = 100;
+i: int = 0;
+
+# main
+main (): int
+{
+    while (y > i)
+    {
+        z: float = i + y as float;
+        a: char = 'A';
+        char str[] = "string \\ \n\t string";
+
+        v: int = new int {i};
+    }
+    return 0;
+}

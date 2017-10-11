@@ -3,11 +3,23 @@ main:
 	bison -d -v grammar.y
 	cc lex.yy.c grammar.tab.c ast.c -o out
 
-testsyntax: main
-	python test.py unittest
+testflex: main
+	python test.py unittest_diff tests_grammar
 
-saveresult:
-	python test.py saveresults
+testsyntax: main
+	python test.py unittest tests_syntax
+
+testast: main
+	python test.py unittest_diff tests_ast
+
+saveresult_flex:
+	python test.py saveresults tests_grammar
+
+saveresult_syntax:
+	python test.py saveresults tests_syntax
+
+saveresult_ast:
+	python test.py saveresults tests_ast
 
 clean:
 	rm out

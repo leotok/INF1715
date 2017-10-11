@@ -2,8 +2,6 @@
 #define ABSTRACTSYNTAXTREE_HEADER
 
 
-
-
 typedef enum typeEnum {
 	CHAR,
 	INT,
@@ -24,7 +22,7 @@ typedef enum nodeTypeEnum {
 	TYPE_VAR,
 	TYPE_CMD
 	
-} ABS_nodeTypeEnum;
+} AST_nodeTypeEnum;
 
 
 // Union Tags
@@ -60,14 +58,14 @@ typedef enum unionTag {
 
 
 
-typedef struct abs_node ABS_node;				
+typedef struct aST_node AST_node;				
 
-typedef struct nodeId ABS_nodeId;				
-typedef struct nodeVar ABS_nodeVar;				
-typedef struct nodeExp ABS_nodeExp;				
+typedef struct nodeId AST_nodeId;				
+typedef struct nodeVar AST_nodeVar;				
+typedef struct nodeExp AST_nodeExp;				
 
-typedef union nodeDecl ABS_nodeDecl;			
-typedef union nodeCMD ABS_nodeCMD;			
+typedef union nodeDecl AST_nodeDecl;			
+typedef union nodeCMD AST_nodeCMD;			
 
 
 
@@ -84,8 +82,8 @@ struct nodeId {
 
 // Variable
 struct nodeVar {
-    ABS_node* id;
-    ABS_node* index;
+    AST_node* id;
+    AST_node* index;
 };
 
 
@@ -94,9 +92,9 @@ struct nodeExp {
     int type;
     
     union {
-        ABS_node* 	varexp;
-        ABS_node* 	cast; // Futuro
-        ABS_node* 	parenexp;
+        AST_node* 	varexp;
+        AST_node* 	cast; // Futuro
+        AST_node* 	parenexp;
         
 
         union {
@@ -107,19 +105,19 @@ struct nodeExp {
      
         struct {
             int 		opr;
-            ABS_node* 	exp1;
-            ABS_node* 	exp2;
+            AST_node* 	exp1;
+            AST_node* 	exp2;
         } operexp;
 
         struct {
-            ABS_node* 	exp1;
-            ABS_node* 	exp2;
+            AST_node* 	exp1;
+            AST_node* 	exp2;
         } callexp;
 
         // New Array Info
         struct {
             int 		type;
-            ABS_node*	exp;
+            AST_node*	exp;
         } newexp;
         
     } data;
@@ -133,14 +131,14 @@ union nodeDecl {
 
 	struct {
 		int 		type;
-		ABS_node* 	id;
+		AST_node* 	id;
     } vardecl;
     
 	struct {
 		int 		type;
-		ABS_node* 	id;
-		ABS_node* 	param;
-		ABS_node* 	block;
+		AST_node* 	id;
+		AST_node* 	param;
+		AST_node* 	block;
 	} funcdecl;
 };
 
@@ -150,32 +148,32 @@ union nodeDecl {
 union nodeCMD {
 	
 	struct {
-		ABS_node* 	exp;
-		ABS_node* 	cmd1;
-		ABS_node* 	cmd2;
+		AST_node* 	exp;
+		AST_node* 	cmd1;
+		AST_node* 	cmd2;
 	} ifcmd;
 
 	struct {
-		ABS_node* 	exp;
-		ABS_node* 	cmd;
+		AST_node* 	exp;
+		AST_node* 	cmd;
 	} whilecmd;
 
 	struct {
-		ABS_node* 	var;
-		ABS_node* 	exp;
+		AST_node* 	var;
+		AST_node* 	exp;
 	} attrcmd;
 
 	struct {
-		ABS_node* 	exp;
+		AST_node* 	exp;
 	} retcmd;
 
 	struct {
-		ABS_node* 	decl;
-		ABS_node* 	cmd;
+		AST_node* 	decl;
+		AST_node* 	cmd;
 	} blockcmd;
 	
 	struct {
-		ABS_node* 	exp;
+		AST_node* 	exp;
 	} expcmd;
 };
 
@@ -183,72 +181,72 @@ union nodeCMD {
 
 
 // Abstract Syntax Tree Node
-struct abs_node {
-	ABS_nodeTypeEnum 	type;
+struct aST_node {
+	AST_nodeTypeEnum 	type;
 	ABS_unionTag 		tag;
 	int 				line;
 
 	// List Struture
-	ABS_node* 	next;
-	ABS_node* 	last;	
+	AST_node* 	next;
+	AST_node* 	last;	
 
 	union {
-		ABS_nodeId 			id;
-		ABS_nodeExp 		exp;
-		ABS_nodeVar 		var;
-		ABS_nodeDecl 		decl;
-		ABS_nodeCMD 		cmd;
+		AST_nodeId 			id;
+		AST_nodeExp 		exp;
+		AST_nodeVar 		var;
+		AST_nodeDecl 		decl;
+		AST_nodeCMD 		cmd;
 	} node;
 };
 
 // -------------
 
 #include "grammar.tab.h"
-extern ABS_node* programNode;
+extern AST_node* programNode;
 
 
 // FUNCTIONS --------------------------------------------------------------------------
 
 // Literals
-ABS_node* ABS_literalInt(int value);
-ABS_node* ABS_literalFloat(float value);
-ABS_node* ABS_literalString(char * str);
+AST_node* ABS_literalInt(int value);
+AST_node* ABS_literalFloat(float value);
+AST_node* ABS_literalString(char * str);
 
 // Id
-ABS_node* ABS_id(char * name);
+AST_node* ABS_id(char * name);
 
 // Cast ( usar no futuro , costurar arvore )
-ABS_node* ABS_typecast( int type , ABS_node* exp);
+AST_node* ABS_typecast( int type , AST_node* exp);
 
 // Expressions
-ABS_node* ABS_expOpr( int opr, ABS_node* exp1, ABS_node* exp2 );
-ABS_node* ABS_expParented( ABS_node* exp );
-ABS_node* ABS_expVar( ABS_node* var );
-ABS_node* ABS_expCall( ABS_node* exp1 , ABS_node* exp2 );
-ABS_node* ABS_expNew( int type, ABS_node* exp );
+AST_node* ABS_expOpr( int opr, AST_node* exp1, AST_node* exp2 );
+AST_node* ABS_expParented( AST_node* exp );
+AST_node* ABS_expVar( AST_node* var );
+AST_node* ABS_expCall( AST_node* exp1 , AST_node* exp2 );
+AST_node* ABS_expNew( int type, AST_node* exp );
 
 // Variables
-ABS_node* ABS_varArray( ABS_node* exp1 , ABS_node* exp2 );
-ABS_node* ABS_varMono( ABS_node* id );
+AST_node* ABS_varArray( AST_node* exp1 , AST_node* exp2 );
+AST_node* ABS_varMono( AST_node* id );
 
 // Declarations
-ABS_node* ABS_declVar( int type , ABS_node* id );
-ABS_node* ABS_declFunc( int type , ABS_node* id , ABS_node* param , ABS_node* block );
+AST_node* ABS_declVar( int type , AST_node* id );
+AST_node* ABS_declFunc( int type , AST_node* id , AST_node* param , AST_node* block );
 
 // Commands
-ABS_node* ABS_cmdIf( ABS_node* exp , ABS_node* cmd1 , ABS_node* cmd2 );
-ABS_node* ABS_cmdWhile( ABS_node* exp , ABS_node* cmd);
-ABS_node* ABS_cmdAttr( ABS_node* var , ABS_node* exp );
-ABS_node* ABS_cmdRet( ABS_node* exp );
-ABS_node* ABS_cmdExp(ABS_node* exp);
-ABS_node* ABS_block( ABS_node* decl , ABS_node* cmd );
+AST_node* ABS_cmdIf( AST_node* exp , AST_node* cmd1 , AST_node* cmd2 );
+AST_node* ABS_cmdWhile( AST_node* exp , AST_node* cmd);
+AST_node* ABS_cmdAttr( AST_node* var , AST_node* exp );
+AST_node* ABS_cmdRet( AST_node* exp );
+AST_node* ABS_cmdExp(AST_node* exp);
+AST_node* ABS_block( AST_node* decl , AST_node* cmd );
 
 // Lists 
-ABS_node* ABS_mergeList( ABS_node* list , ABS_node* element );
+AST_node* ABS_mergeList( AST_node* list , AST_node* element );
 
 
-// Print ABS
-void ABS_print( int style );
+// Print ABS tree
+void ABS_print_tree();
 
 
 #endif

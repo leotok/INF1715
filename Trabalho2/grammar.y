@@ -9,7 +9,7 @@
   void  yyerror(const char *str);
   int   yywrap(void);
 
-  ABS_node* programNode = NULL;
+  AST_node* programNode = NULL;
 }
 
 %{
@@ -26,7 +26,7 @@
         int 	lineNumber;
     } vId;
 
-    ABS_node* vNode;	
+    AST_node* vNode;	
 }
 
 %token	<vInt> TK_INT
@@ -199,7 +199,7 @@ int main(void) {
 	
 	ret = yyparse();
 	
-	ABS_print(1);
+	ABS_print_tree();
 	
   return 0;
 }
