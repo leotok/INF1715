@@ -39,7 +39,7 @@
 %token	<vInt> TK_WHILE
 %token	<vInt> TK_AS
 %token	<vInt> TK_RETURN
-%token	<vInt> TK_ID
+%token	<vId> TK_ID
 %token	<vInt> TK_EQUAL
 %token  <vInt> TK_NOTEQUAL
 %token	<vInt> TK_LESSEQUAL
@@ -49,7 +49,6 @@
 %token	<vInt> TK_DEC
 %token	<vFloat> TK_REAL
 %token	<vString> TK_STRING
-
 
 
 %type <vInt> tipo_primitivo tipo
@@ -72,7 +71,7 @@ definicao:              def_variavel                                      { $$ =
                     |   def_funcao                                        { $$ = $1; }
 ;
 
-def_variavel:           TK_ID ':' tipo ';'                                { $$ = ABS_declVar($3, $1); }
+def_variavel:           TK_ID ':' tipo ';'                                { $$ = ABS_declVar($3, ABS_id($1.name)); }
 ;
 
 tipo:                   tipo_primitivo                                    { $$ = $1 ;}
@@ -202,6 +201,5 @@ int main(void) {
 	
 	ABS_print(1);
 	
-	BUF_Free();
   return 0;
 }
