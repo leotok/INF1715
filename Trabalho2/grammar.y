@@ -78,10 +78,10 @@ tipo:                   tipo_primitivo                                    { $$ =
                     |   tipo '[' ']'                                      { $$ = TYP_array($1) ;}
 ;
 
-tipo_primitivo:         TK_INT                                            { $$ = TYP_getID(CHAR); }
-                    |   TK_FLOAT                                          { $$ = TYP_getID(INT); }
-                    |   TK_CHAR                                           { $$ = TYP_getID(FLOAT); }
-                    |   TK_VOID                                           {;}
+tipo_primitivo:         TK_INT                                            { $$ = TYP_getID(INT); }
+                    |   TK_FLOAT                                          { $$ = TYP_getID(FLOAT); }
+                    |   TK_CHAR                                           { $$ = TYP_getID(CHAR); }
+                    |   TK_VOID                                           { $$ = TYP_getID(VOID); }
 ;
 
 def_funcao:             TK_ID '(' parametros ')' ':' tipo bloco           { $$ = ABS_declFunc($6, ABS_id($1.name), $3, $7); }
@@ -196,10 +196,11 @@ int yywrap(void) {
 
 int main(void) {
   int ret;
-	
+	printf("oi\n");
 	ret = yyparse();
-	
-	ABS_print_tree();
+  ABS_print_tree();
+  printf("tchau\n");
+
 	
   return 0;
 }

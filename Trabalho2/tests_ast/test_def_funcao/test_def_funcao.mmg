@@ -1,3 +1,5 @@
-funcao(): void {
-    
+funcao(c: char): void {
+    i:int;
+    x:float;
+    i = x + 10;
 }
