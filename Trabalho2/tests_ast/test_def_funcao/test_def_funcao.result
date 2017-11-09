@@ -1,6 +1,26 @@
+oi
 
     1  [Function Declaration]
-    2    <Unknown>
+    2    <Void>
     2    funcao
+    2    [Variable Declaration]
+    3      <Char>
+    3      c
     2    [Block]
-    
+    3      [Variable Declaration]
+    4        <Integer>
+    4        i
+    3      [Variable Declaration]
+    4        <Float>
+    4        x
+    3      [Attribution]
+    4        [Variable]
+    5          i
+    4        [Exp]
+    5          [Exp]
+    6            [Variable]
+    7              x
+    5          +
+    5          [Exp]
+    6            10
+tchau

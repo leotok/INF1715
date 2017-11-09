@@ -1,13 +1,14 @@
+oi
 
     1  [Function Declaration]
-    2    <Unknown>
+    2    <Void>
     2    funcao
     2    [Block]
     3      [Return]
     4        [Exp]
     5          1
     1  [Function Declaration]
-    2    <Unknown>
+    2    <Void>
     2    funcao
     2    [Block]
     3      [Return]
@@ -18,7 +19,7 @@
     5          [Exp]
     6            1
     1  [Function Declaration]
-    2    <Unknown>
+    2    <Void>
     2    funcao
     2    [Block]
     3      [Return]
@@ -26,7 +27,7 @@
     5          [Call]
     6            f
     1  [Function Declaration]
-    2    <Unknown>
+    2    <Void>
     2    funcao
     2    [Block]
     3      [Return]
@@ -37,7 +38,7 @@
     7              [Variable]
     8                x
     1  [Function Declaration]
-    2    <Unknown>
+    2    <Void>
     2    funcao
     2    [Block]
     3      [Return]
@@ -53,7 +54,7 @@
     8                [Variable]
     9                  y
     1  [Function Declaration]
-    2    <Unknown>
+    2    <Void>
     2    funcao
     2    [Block]
     3      [Return]
@@ -77,13 +78,13 @@
     6            [Variable]
     7              z
     1  [Function Declaration]
-    2    <Unknown>
+    2    <Void>
     2    funcao
     2    [Variable Declaration]
-    3      <Integer>
+    3      <Float>
     3      a
     2    [Variable Declaration]
-    3      <Integer>
+    3      <Float>
     3      b
     2    [Block]
     3      [Return]
@@ -96,7 +97,7 @@
     6            [Variable]
     7              b
     1  [Function Declaration]
-    2    <Unknown>
+    2    <Void>
     2    funcao
     2    [Block]
     3      [Return]
@@ -106,3 +107,4 @@
     5          ==
     5          [Exp]
     6            2
+tchau

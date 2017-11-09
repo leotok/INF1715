@@ -18,15 +18,15 @@
 
 %union {
     char* 	vString;
-    int 	vInt;	
+    int 	vInt;
     float 	vFloat;
- 
+
     struct id {
         char* 	name;
         int 	lineNumber;
     } vId;
 
-    AST_node* vNode;	
+    AST_node* vNode;
 }
 
 %token	<vInt> TK_INT
@@ -54,7 +54,7 @@
 %type <vInt> tipo_primitivo tipo
 %type <vNode> programa def_variavel lista_def_var variavel
 %type <vNode> expressao_base exp_unaria exp_mult exp_add exp_cmp exp_and expressao exp_or exp_as
-%type <vNode> lista_exp lista_exp2 chamada comando lista_comandos 
+%type <vNode> lista_exp lista_exp2 chamada comando lista_comandos
 %type <vNode> bloco lista_params parametros parametro
 %type <vNode> def_funcao definicao lista_definicoes
 
@@ -196,11 +196,9 @@ int yywrap(void) {
 
 int main(void) {
   int ret;
-	printf("oi\n");
 	ret = yyparse();
   ABS_print_tree();
-  printf("tchau\n");
 
-	
+
   return 0;
 }
